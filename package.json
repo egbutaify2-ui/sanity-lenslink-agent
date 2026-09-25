@@ -1,0 +1,18 @@
+{
+  "name": "sanity-lenslink-agent",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "studio",
+    "web"
+  ],
+  "scripts": {
+    "dev:studio": "npm run dev --workspace=studio",
+    "dev:web": "npm run dev --workspace=web",
+    "build:studio": "npm run build --workspace=studio",
+    "build:web": "npm run build --workspace=web"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
