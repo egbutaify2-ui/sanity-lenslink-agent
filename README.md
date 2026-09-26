@@ -3,11 +3,11 @@
 AI camera gear compatibility agent powered by structured Sanity content.
 
 > **Project Handoff & Progress Report**
-> 
+>
 > **Challenge:** Sanity Challenge 2026 — Path One: Ship an Agent That Queries Real Content  
 > **Repository:** https://github.com/egbutaify2-ui/sanity-lenslink-agent  
 > **Last updated:** September 26, 2026  
-> **Current checkpoint:** Milestone 2 — Studio is running; six schemas are visible; no production knowledge records have been intentionally populated yet.
+> **Current checkpoint:** **Milestone 3 — Initial knowledge base is next. Milestone 2 Studio/schema/reference verification is complete.**
 >
 > This README is the **living project handoff**. Update it after every meaningful milestone, verified fix, architecture change, or completed feature so another AI agent can quickly understand what has been done and continue from the current checkpoint without restarting the project.
 
@@ -22,7 +22,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 | Sanity Project ID | `kv3pdv23` |
 | Sanity Dataset | `production` |
 | Node requirement | 22.12+ |
-| Current checkpoint | Milestone 2: Studio is running; six schemas are visible; no production knowledge records have been intentionally populated yet. |
+| Current checkpoint | **Milestone 3 — Build the initial structured knowledge base next.** |
 
 ## 1. What LensLink Is
 
@@ -82,6 +82,15 @@ Existing foundation:
 | ✅ Studio dev server verified | Ran `npm run dev:studio` successfully. Sanity Studio started at `http://localhost:3333/`. |
 | ✅ Sanity login/access verified | Signed into the Studio and confirmed the project can be accessed locally. |
 | ✅ Six schemas verified visually | Studio shows Camera, Lens, Adapter, Mount, Compatibility Rule, and Source. |
+| ✅ Milestone 2 form verification | Opened and verified all six document forms and their expected fields in the Sanity Studio. |
+| ✅ Camera → Mount reference verified | Created a temporary test Camera, linked it to the temporary test Mount, published it, reopened it, and confirmed the reference persisted. |
+| ✅ Lens → Native Mount reference verified | Created a temporary test Lens, linked it to the temporary test Mount, published it, reopened it, and confirmed the reference persisted. |
+| ✅ Mount → Sources reference verified | Created a temporary test Source, attached it to the temporary test Mount, published it, reopened the Mount, and confirmed the Source remained attached. |
+| ✅ Adapter → From/To Mount references verified | Created a temporary test Adapter, linked both From Mount and To Mount to the temporary test Mount, published it, reopened it, and confirmed both references persisted. |
+| ✅ Compatibility Rule → Camera/Lens verified | Created a temporary Compatibility Rule linked to the temporary test Camera and Lens, published it, reopened it, and confirmed both references persisted. |
+| ✅ Compatibility Rule → Required Adapter verified | Edited the published Compatibility Rule, added the temporary test Adapter as Required Adapter, republished it, and confirmed the reference persisted. |
+| ✅ Compatibility Rule → Sources verified | Edited the published Compatibility Rule again, added the temporary test Source, republished it, and confirmed the Source reference persisted. |
+| ✅ Milestone 2 completed | All six schemas, their important fields, the required reference paths, saving, editing, and persistence checks are now verified locally in Studio. |
 
 ## 4. Current Verified State
 
@@ -90,7 +99,9 @@ Existing foundation:
 - All six required schema types are registered in `studio/schemas/index.ts`.
 - The web application builds successfully with Next.js 16.3.6.
 - The current web page can fetch camera records through the existing `CAMERAS_QUERY`.
-- No meaningful compatibility knowledge base has been populated yet during this continuation session.
+- **Milestone 2 is complete:** the six Studio forms and the required references have been manually verified, including publish/reopen persistence and editing of the Compatibility Rule.
+- Temporary Milestone 2 test records currently exist in the Sanity dataset. **Remove these test records before creating the real knowledge base** unless they are intentionally repurposed.
+- No meaningful real compatibility knowledge base has been intentionally populated yet.
 - No Sanity Context/MCP agent integration has been implemented yet.
 - The final LensLink AI compatibility experience has not been built yet.
 
@@ -107,23 +118,20 @@ Existing foundation:
 
 ## 6. What Remains — Continue Here
 
-### Milestone 2 — Finish Studio verification
-
-Open each document type and verify its form fields, references, saving, editing, and persistence.
-
-Check:
-
-- Camera → Mount
-- Lens → Native Mount
-- Adapter → From/To Mount
-- Compatibility Rule → Camera/Lens/Adapter/Sources
-- Source evidence fields
-
 ### Milestone 3 — Build the initial knowledge base
 
-Create a small, carefully connected set of real camera, lens, mount, adapter, compatibility rule, and source records.
+This is the **next task**.
 
-**Do not create hundreds of records.** The goal is a strong demonstration of structured reasoning.
+Create a small, carefully connected set of **real** camera, lens, mount, adapter, compatibility rule, and source records.
+
+Requirements:
+
+- Use real camera and lens compatibility facts.
+- Prefer authoritative manufacturer documentation for the supporting evidence.
+- Keep the dataset intentionally small; do not create hundreds of records.
+- Build records so the relationship graph can demonstrate direct compatibility, adapter-required compatibility, and incompatible/unknown cases.
+- Attach Source records to important claims.
+- Do not use the temporary Milestone 2 test records as real knowledge unless deliberately verified and repurposed.
 
 ### Milestone 4 — Source-check the data
 
@@ -204,15 +212,16 @@ Use the Path One submission template, publish the DEV post, include `#sanitychal
 ## 7. Exact Continuation Order for the Next AI
 
 1. Do not recreate the repository, Studio, schemas, or Sanity project.
-2. Start by reading this handoff and the repository README plus existing Studio/web code.
-3. Verify the six Studio document forms and their references by creating test records or, preferably, the first real knowledge records when ready.
-4. Populate a small connected knowledge base using real camera/lens/mount/adapter facts and authoritative sources.
-5. Source-check every important compatibility claim.
-6. Then connect Sanity Context/MCP and prove basic retrieval before attempting relationship reasoning.
-7. Then implement the LensLink agent experience around those verified Sanity relationships.
-8. Test direct compatibility, adapter reasoning, limitations, sources, unknowns, ambiguity, and hallucination resistance.
-9. Deploy only after the core behavior is proven locally.
-10. Prepare the judge/demo evidence and final DEV submission.
+2. Read this handoff and the existing Studio/web code before making architecture changes.
+3. Treat **Milestone 2 as complete**. Do not repeat the schema verification unless a later change breaks it.
+4. Remove or clearly isolate the temporary Milestone 2 test records before the real knowledge base is created.
+5. Populate a small connected knowledge base using real camera/lens/mount/adapter facts and authoritative sources.
+6. Source-check every important compatibility claim.
+7. Then connect Sanity Context/MCP and prove basic retrieval before attempting relationship reasoning.
+8. Then implement the LensLink agent experience around those verified Sanity relationships.
+9. Test direct compatibility, adapter reasoning, limitations, sources, unknowns, ambiguity, and hallucination resistance.
+10. Deploy only after the core behavior is proven locally.
+11. Prepare the judge/demo evidence and final DEV submission.
 
 ## 8. Important Rules / Do Not Break
 
@@ -266,7 +275,7 @@ The Next.js app uses the normal Next.js development URL.
 
 ## 10. One-Paragraph Prompt for the Next AI Agent
 
-Continue the existing LensLink Sanity Challenge 2026 project from the GitHub repository `egbutaify2-ui/sanity-lenslink-agent`. Do not recreate the project or create a new Sanity project. Use Sanity project `kv3pdv23` and dataset `production`, preserve the root → studio → web structure, and start from the verified checkpoint in this handoff: dependencies install, Studio builds, web builds, Studio runs locally, and all six schemas are visible. The next task is to finish Milestone 2 by verifying the schema forms and references, then proceed to a small real structured knowledge base, source-check the data, connect Sanity Context/MCP, prove the agent can retrieve and traverse the structured relationships, and only then build the final LensLink compatibility UX, test it, deploy it, and prepare the DEV submission. The core requirement is that LensLink answers because it can query and reason over structured Sanity content and evidence, not because a generic LLM guessed the answer.
+Continue the existing LensLink Sanity Challenge 2026 project from the GitHub repository `egbutaify2-ui/sanity-lenslink-agent`. Do not recreate the project or create a new Sanity project. Use Sanity project `kv3pdv23` and dataset `production`, preserve the root → studio → web structure, and treat **Milestone 2 as complete**: all six Studio forms were verified, the key reference relationships were tested, records were published/reopened successfully, and the Compatibility Rule was edited and republished successfully. The next task is **Milestone 3: remove/isolate the temporary test records and build a small real structured knowledge base** using verified camera, lens, mount, adapter, compatibility-rule, and source records. Then source-check the data, connect Sanity Context/MCP, prove the agent can retrieve and traverse the structured relationships, and only then build the final LensLink compatibility UX, test it, deploy it, and prepare the DEV submission. The core requirement is that LensLink answers because it can query and reason over structured Sanity content and evidence, not because a generic LLM guessed the answer.
 
 ## 11. Handoff Maintenance Rule
 
