@@ -7,7 +7,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 > **Challenge:** Sanity Challenge 2026 — Path One: Ship an Agent That Queries Real Content  
 > **Repository:** https://github.com/egbutaify2-ui/sanity-lenslink-agent  
 > **Last updated:** September 26, 2026  
-> **Current checkpoint:** **Milestone 3 — Initial knowledge base is next. Milestone 2 Studio/schema/reference verification is complete.**
+> **Current checkpoint:** **Milestone 3 — Initial knowledge base is next. Milestone 2 Studio/schema/reference verification is complete. Sanity MCP is configured; live VS Code MCP verification is pending AI credits.**
 >
 > This README is the **living project handoff**. Update it after every meaningful milestone, verified fix, architecture change, or completed feature so another AI agent can quickly understand what has been done and continue from the current checkpoint without restarting the project.
 
@@ -22,7 +22,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 | Sanity Project ID | `kv3pdv23` |
 | Sanity Dataset | `production` |
 | Node requirement | 22.12+ |
-| Current checkpoint | **Milestone 3 — Build the initial structured knowledge base next.** |
+| Current checkpoint | **Milestone 3 — Build the initial structured knowledge base next. Sanity MCP is configured, but live VS Code MCP access still needs verification.** |
 
 ## Progress Tracker
 
@@ -53,6 +53,37 @@ This is the project's **working completion tracker**. Percentages are practical 
 - **After Milestone 12:** submission is complete; target is **100% project completion**.
 
 The percentages are used only to track our own movement through the project. They must not be presented as an official contest/judging score.
+
+## Sanity MCP Setup Checkpoint
+
+Sanity MCP configuration was initiated and completed on **September 26, 2026**.
+
+Verified:
+
+- ✅ Ran `npx sanity@latest mcp configure` from the LensLink repository.
+- ✅ Sanity CLI authentication completed successfully through the browser login flow.
+- ✅ The Sanity MCP server was configured for:
+  - Claude Code
+  - GitHub Copilot CLI
+  - VS Code
+- ✅ Configuration completed without an error.
+- ⏳ The VS Code AI agent has **not yet verified live MCP access** to the Sanity project because the user currently has no VS Code AI/Copilot credit available.
+- ⏳ No Sanity MCP content changes were made during this setup checkpoint.
+
+### Next MCP verification
+
+When VS Code AI access/credits are available, open the repository in VS Code and ask the agent to verify:
+
+- Sanity MCP availability
+- Available Sanity MCP tools
+- Access to project `kv3pdv23`
+- Access to dataset `production`
+- Ability to read the existing schemas/content
+
+**Do not allow the agent to create, edit, delete, publish, or migrate Sanity content during the first verification request.**
+
+Only after live MCP access is confirmed should Milestone 3 content creation be automated through Sanity MCP.
+
 
 ## 1. What LensLink Is
 
@@ -133,6 +164,7 @@ Existing foundation:
 - Temporary Milestone 2 test records currently exist in the Sanity dataset. **Remove these test records before creating the real knowledge base** unless they are intentionally repurposed.
 - No meaningful real compatibility knowledge base has been intentionally populated yet.
 - No Sanity Context/MCP agent integration has been implemented yet.
+- **Sanity MCP setup is configured for the development AI tools**, but live VS Code MCP access still needs to be verified when AI credits are available.
 - The final LensLink AI compatibility experience has not been built yet.
 
 ## 5. Schema Model Already Present
@@ -267,11 +299,13 @@ Use the Path One submission template, publish the DEV post, include `#sanitychal
 4. Remove or clearly isolate the temporary Milestone 2 test records before the real knowledge base is created.
 5. Populate a small connected knowledge base using real camera/lens/mount/adapter facts and authoritative sources.
 6. Source-check every important compatibility claim.
-7. Then connect Sanity Context/MCP and prove basic retrieval before attempting relationship reasoning.
-8. Then implement the LensLink agent experience around those verified Sanity relationships.
-9. Test direct compatibility, adapter reasoning, limitations, sources, unknowns, ambiguity, and hallucination resistance.
-10. Deploy only after the core behavior is proven locally.
-11. Prepare the judge/demo evidence and final DEV submission.
+7. When VS Code AI credits are available, first verify the already-configured Sanity MCP connection in read-only mode; do not mutate content during this verification.
+8. Then build the real knowledge base through the verified Sanity MCP workflow where appropriate.
+9. Then connect Sanity Context/MCP and prove basic retrieval before attempting relationship reasoning.
+10. Then implement the LensLink agent experience around those verified Sanity relationships.
+11. Test direct compatibility, adapter reasoning, limitations, sources, unknowns, ambiguity, and hallucination resistance.
+12. Deploy only after the core behavior is proven locally.
+13. Prepare the judge/demo evidence and final DEV submission.
 
 ## 8. Important Rules / Do Not Break
 
@@ -325,7 +359,7 @@ The Next.js app uses the normal Next.js development URL.
 
 ## 10. One-Paragraph Prompt for the Next AI Agent
 
-Continue the existing LensLink Sanity Challenge 2026 project from the GitHub repository `egbutaify2-ui/sanity-lenslink-agent`. Do not recreate the project or create a new Sanity project. Use Sanity project `kv3pdv23` and dataset `production`, preserve the root → studio → web structure, and treat **Milestone 2 as complete**: all six Studio forms were verified, the key reference relationships were tested, records were published/reopened successfully, and the Compatibility Rule was edited and republished successfully. The next task is **Milestone 3: remove/isolate the temporary test records and build a small real structured knowledge base**. Use the Progress Tracker in this README to track movement; after Milestone 6, the practical target is approximately 70% complete, with the remaining work focused on proving, hardening, polishing, deploying, and submitting the project. using verified camera, lens, mount, adapter, compatibility-rule, and source records. Then source-check the data, connect Sanity Context/MCP, prove the agent can retrieve and traverse the structured relationships, and only then build the final LensLink compatibility UX, test it, deploy it, and prepare the DEV submission. The core requirement is that LensLink answers because it can query and reason over structured Sanity content and evidence, not because a generic LLM guessed the answer.
+Continue the existing LensLink Sanity Challenge 2026 project from the GitHub repository `egbutaify2-ui/sanity-lenslink-agent`. Do not recreate the project or create a new Sanity project. Use Sanity project `kv3pdv23` and dataset `production`, preserve the root → studio → web structure, and treat **Milestone 2 as complete**: all six Studio forms were verified, the key reference relationships were tested, records were published/reopened successfully, and the Compatibility Rule was edited and republished successfully. The next task is **Milestone 3: remove/isolate the temporary test records and build a small real structured knowledge base** using verified camera, lens, mount, adapter, compatibility-rule, and source records. When VS Code AI access is available, first verify the configured Sanity MCP connection before automating content creation. Use the Progress Tracker in this README to track movement; after Milestone 6, the practical target is approximately 70% complete, with the remaining work focused on proving, hardening, polishing, deploying, and submitting the project. Then source-check the data, connect Sanity Context/MCP, prove the agent can retrieve and traverse the structured relationships, and only then build the final LensLink compatibility UX, test it, deploy it, and prepare the DEV submission. The core requirement is that LensLink answers because it can query and reason over structured Sanity content and evidence, not because a generic LLM guessed the answer.
 
 ## 11. Handoff Maintenance Rule
 
