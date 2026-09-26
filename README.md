@@ -24,6 +24,36 @@ AI camera gear compatibility agent powered by structured Sanity content.
 | Node requirement | 22.12+ |
 | Current checkpoint | **Milestone 3 — Build the initial structured knowledge base next.** |
 
+## Progress Tracker
+
+This is the project's **working completion tracker**. Percentages are practical planning estimates, not an official Sanity score.
+
+| Stage | Status | Progress |
+|---|---|---:|
+| Foundation / project setup | ✅ Complete | 100% |
+| Milestone 2 — Studio/schema/reference verification | ✅ Complete | 100% |
+| Milestone 3 — Initial real knowledge base | ⏳ Next | 0% |
+| Milestone 4 — Source verification | ⏳ Pending | 0% |
+| Milestone 5 — Sanity Context/MCP agent | ⏳ Pending | 0% |
+| Milestone 6 — LensLink user experience | ⏳ Pending | 0% |
+| Milestone 7 — Prove structured reasoning | ⏳ Pending | 0% |
+| Milestone 8 — Testing / hardening | ⏳ Pending | 0% |
+| Milestone 9 — UX quality pass | ⏳ Pending | 0% |
+| Milestone 10 — Deployment | ⏳ Pending | 0% |
+| Milestone 11 — Demo evidence | ⏳ Pending | 0% |
+| Milestone 12 — DEV submission | ⏳ Pending | 0% |
+
+### Practical progress checkpoints
+
+- **Current:** foundation + Milestone 2 complete; overall practical progress is estimated at **~20%**.
+- **After Milestone 3:** real structured knowledge base exists.
+- **After Milestone 5:** the core Sanity-powered agent architecture is connected and retrieval is proven.
+- **After Milestone 6:** the core LensLink product experience should be working; overall practical progress is estimated at **~70%**.
+- **After Milestones 7–11:** the core behavior is proven, hardened, polished, deployed, and demo-ready.
+- **After Milestone 12:** submission is complete; target is **100% project completion**.
+
+The percentages are used only to track our own movement through the project. They must not be presented as an official contest/judging score.
+
 ## 1. What LensLink Is
 
 LensLink is an AI camera-gear compatibility agent. A user should be able to ask questions such as:
@@ -120,6 +150,8 @@ Existing foundation:
 
 ### Milestone 3 — Build the initial knowledge base
 
+**Status: ⏳ NEXT**
+
 This is the **next task**.
 
 Create a small, carefully connected set of **real** camera, lens, mount, adapter, compatibility rule, and source records.
@@ -135,6 +167,8 @@ Requirements:
 
 ### Milestone 4 — Source-check the data
 
+**Status: ⏳ PENDING**
+
 Use authoritative manufacturer documentation where available.
 
 Attach Source records to important claims and record relevant evidence/notes.
@@ -143,9 +177,13 @@ Do not enter unsupported assumptions.
 
 ### Milestone 5 — Connect Sanity Context/MCP
 
+**Status: ⏳ PENDING**
+
 Choose and document the agent architecture, connect the agent to the existing Sanity project, verify retrieval of Cameras/Lenses/Mounts/Adapters/Rules/Sources, then test reference traversal.
 
 ### Milestone 6 — Build the LensLink user experience
+
+**Status: ⏳ PENDING — target checkpoint: ~70% overall**
 
 Create the focused user-facing flow:
 
@@ -157,11 +195,15 @@ Create the focused user-facing flow:
 
 ### Milestone 7 — Prove structured content matters
 
+**Status: ⏳ PENDING**
+
 Prepare direct compatibility, adapter, limitations, evidence, and unknown-combination demo questions.
 
 The agent must show that it is using the structured Sanity relationships.
 
 ### Milestone 8 — Test and harden
+
+**Status: ⏳ PENDING**
 
 Test:
 
@@ -175,6 +217,8 @@ Test:
 The agent must not invent facts or URLs.
 
 ### Milestone 9 — UX quality pass
+
+**Status: ⏳ PENDING**
 
 Check:
 
@@ -190,11 +234,15 @@ Check:
 
 ### Milestone 10 — Deploy
 
+**Status: ⏳ PENDING**
+
 Deploy the Next.js application.
 
 Configure production environment variables, keep secrets server-side, verify the Sanity project/dataset, and prove that the agent works in production.
 
 ### Milestone 11 — Demo evidence
+
+**Status: ⏳ PENDING**
 
 Prepare:
 
@@ -206,6 +254,8 @@ Prepare:
 - Sanity project/dataset evidence
 
 ### Milestone 12 — DEV submission
+
+**Status: ⏳ PENDING**
 
 Use the Path One submission template, publish the DEV post, include `#sanitychallenge`, and provide the required Sanity project/dataset evidence.
 
@@ -275,7 +325,7 @@ The Next.js app uses the normal Next.js development URL.
 
 ## 10. One-Paragraph Prompt for the Next AI Agent
 
-Continue the existing LensLink Sanity Challenge 2026 project from the GitHub repository `egbutaify2-ui/sanity-lenslink-agent`. Do not recreate the project or create a new Sanity project. Use Sanity project `kv3pdv23` and dataset `production`, preserve the root → studio → web structure, and treat **Milestone 2 as complete**: all six Studio forms were verified, the key reference relationships were tested, records were published/reopened successfully, and the Compatibility Rule was edited and republished successfully. The next task is **Milestone 3: remove/isolate the temporary test records and build a small real structured knowledge base** using verified camera, lens, mount, adapter, compatibility-rule, and source records. Then source-check the data, connect Sanity Context/MCP, prove the agent can retrieve and traverse the structured relationships, and only then build the final LensLink compatibility UX, test it, deploy it, and prepare the DEV submission. The core requirement is that LensLink answers because it can query and reason over structured Sanity content and evidence, not because a generic LLM guessed the answer.
+Continue the existing LensLink Sanity Challenge 2026 project from the GitHub repository `egbutaify2-ui/sanity-lenslink-agent`. Do not recreate the project or create a new Sanity project. Use Sanity project `kv3pdv23` and dataset `production`, preserve the root → studio → web structure, and treat **Milestone 2 as complete**: all six Studio forms were verified, the key reference relationships were tested, records were published/reopened successfully, and the Compatibility Rule was edited and republished successfully. The next task is **Milestone 3: remove/isolate the temporary test records and build a small real structured knowledge base**. Use the Progress Tracker in this README to track movement; after Milestone 6, the practical target is approximately 70% complete, with the remaining work focused on proving, hardening, polishing, deploying, and submitting the project. using verified camera, lens, mount, adapter, compatibility-rule, and source records. Then source-check the data, connect Sanity Context/MCP, prove the agent can retrieve and traverse the structured relationships, and only then build the final LensLink compatibility UX, test it, deploy it, and prepare the DEV submission. The core requirement is that LensLink answers because it can query and reason over structured Sanity content and evidence, not because a generic LLM guessed the answer.
 
 ## 11. Handoff Maintenance Rule
 
