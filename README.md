@@ -7,7 +7,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 > **Challenge:** Sanity Challenge 2026 — Path One: Ship an Agent That Queries Real Content  
 > **Repository:** https://github.com/egbutaify2-ui/sanity-lenslink-agent  
 > **Last updated:** September 26, 2026  
-> **Current checkpoint:** **Milestone 3 — Initial knowledge base is next. Milestone 2 Studio/schema/reference verification is complete. Sanity MCP is configured; live VS Code MCP verification is pending AI credits.**
+> **Current checkpoint:** **Milestone 3 — Initial real knowledge base is next. Milestone 2 is complete. Regular Sanity MCP is configured for development; final Path One Context MCP/Knowledge Base integration is still pending.**
 >
 > This README is the **living project handoff**. Update it after every meaningful milestone, verified fix, architecture change, or completed feature so another AI agent can quickly understand what has been done and continue from the current checkpoint without restarting the project.
 
@@ -22,7 +22,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 | Sanity Project ID | `kv3pdv23` |
 | Sanity Dataset | `production` |
 | Node requirement | 22.12+ |
-| Current checkpoint | **Milestone 3 — Build the initial structured knowledge base next. Sanity MCP is configured, but live VS Code MCP access still needs verification.** |
+| Current checkpoint | **Milestone 3 — Build the initial structured knowledge base next. Regular Sanity MCP is configured, but final Context MCP/Knowledge Base integration is still pending.** |
 
 ## Progress Tracker
 
@@ -84,6 +84,65 @@ When VS Code AI access/credits are available, open the repository in VS Code and
 
 Only after live MCP access is confirmed should Milestone 3 content creation be automated through Sanity MCP.
 
+
+## Challenge Alignment Check — Verified September 28, 2026
+
+We re-checked the official DEV challenge post and contest rules before continuing Milestone 3.
+
+### Path One requirements we must satisfy
+
+The official Path One brief is: **“Ship an agent that queries real content.”** The agent should be pointed at a **Sanity Context MCP endpoint backed by a Knowledge Base**. The strongest submissions demonstrate an agent that only works because the content is structured; if keyword search would produce the same answer, the challenge guidance says to aim higher. citeturn568345search1
+
+The official Path One judging criteria are:
+
+1. Meaningful use of **Sanity Context and structured content**
+2. **Technical implementation and code quality**
+3. **Use of Knowledge Bases**
+4. **Usability** citeturn568345search0turn568345search1
+
+The challenge announcement explicitly uses a **camera gear-head compendium** as an example of the kind of Path One project that fits the prompt, so LensLink's camera/lens compatibility focus is directly aligned with the challenge theme. citeturn568345search1
+
+### What our existing plan already gets right
+
+- Structured Sanity schemas instead of a generic chatbot.
+- Explicit Camera/Lens/Mount/Adapter/Compatibility Rule/Source relationships.
+- Evidence attached to important claims.
+- A compatibility problem where relationships matter, not just keywords.
+- A focused user experience around answers, explanations, limitations, and evidence.
+
+### Critical requirement to prioritize
+
+Our **regular Sanity MCP setup is useful for development/content management**, but it is **not the same thing as the Path One Sanity Context MCP that the finished agent must use**. Sanity's documentation describes Context MCP as a hosted, read-only MCP that can serve either a live dataset or a pre-built Knowledge Base; Knowledge Base mode exposes the indexed entries to the agent. citeturn713866search2turn713866search3
+
+Therefore the project plan must explicitly produce:
+
+**Real Sanity content → Knowledge Base → Sanity Context MCP endpoint → LensLink agent → evidence-backed answer**
+
+For a dataset-backed Context endpoint, Sanity requires the schema to be deployed with `sanity schema deploy`. citeturn713866search4turn713866search5
+
+The challenge post also notes that Knowledge Bases are beta and currently index up to **150 documents**; a small, high-quality connected knowledge base is therefore appropriate for LensLink. Alternatively, Sanity supports serving a full dataset through Context MCP with embeddings enabled. citeturn568345search2
+
+### Submission requirements we must not forget
+
+Every entry must include:
+
+- A published **DEV submission post** using the challenge submission template and `#sanitychallenge`.
+- The **Sanity project ID or a public dataset URL**. citeturn568345search0turn568345search1
+
+The challenge page also says that if the app requires login, testing credentials and/or clear testing instructions should be provided to judges. An agent-session transcript is encouraged. citeturn568345search1
+
+### Alignment decision
+
+**LensLink remains the correct project direction.** No concept change is needed.
+
+The main planning adjustment is that Milestone 3–5 must be treated as one connected core path:
+
+**Milestone 3:** build the real structured camera/lens knowledge base and source evidence.  
+**Milestone 4:** source-check and clean the content.  
+**Milestone 5:** create/build the Knowledge Base, deploy the schema, configure the **Sanity Context MCP endpoint in Knowledge Base mode**, and prove the agent can retrieve the structured knowledge.  
+**Milestone 6:** build the user-facing LensLink experience around that verified Context MCP retrieval.
+
+Do not treat regular Sanity MCP as a substitute for Context MCP in the final architecture.
 
 ## 1. What LensLink Is
 
@@ -207,11 +266,13 @@ Attach Source records to important claims and record relevant evidence/notes.
 
 Do not enter unsupported assumptions.
 
-### Milestone 5 — Connect Sanity Context/MCP
+### Milestone 5 — Create Knowledge Base + connect Sanity Context MCP
 
-**Status: ⏳ PENDING**
+**Status: ⏳ PENDING — critical Path One requirement**
 
-Choose and document the agent architecture, connect the agent to the existing Sanity project, verify retrieval of Cameras/Lenses/Mounts/Adapters/Rules/Sources, then test reference traversal.
+Deploy the Sanity schema, create/build the Knowledge Base from the verified structured content, create a Sanity Context MCP endpoint in the appropriate mode, connect the LensLink agent to that endpoint, verify retrieval of Cameras/Lenses/Mounts/Adapters/Rules/Sources, and test reference traversal and evidence grounding.
+
+The finished agent must use **Sanity Context MCP**, not regular Sanity MCP, for its content retrieval path.
 
 ### Milestone 6 — Build the LensLink user experience
 
@@ -299,13 +360,15 @@ Use the Path One submission template, publish the DEV post, include `#sanitychal
 4. Remove or clearly isolate the temporary Milestone 2 test records before the real knowledge base is created.
 5. Populate a small connected knowledge base using real camera/lens/mount/adapter facts and authoritative sources.
 6. Source-check every important compatibility claim.
-7. When VS Code AI credits are available, first verify the already-configured Sanity MCP connection in read-only mode; do not mutate content during this verification.
-8. Then build the real knowledge base through the verified Sanity MCP workflow where appropriate.
-9. Then connect Sanity Context/MCP and prove basic retrieval before attempting relationship reasoning.
-10. Then implement the LensLink agent experience around those verified Sanity relationships.
-11. Test direct compatibility, adapter reasoning, limitations, sources, unknowns, ambiguity, and hallucination resistance.
-12. Deploy only after the core behavior is proven locally.
-13. Prepare the judge/demo evidence and final DEV submission.
+7. When VS Code AI credits are available, first verify the already-configured regular Sanity MCP connection in read-only mode; do not mutate content during this verification.
+8. Build the real knowledge base through the verified Sanity MCP workflow where appropriate.
+9. Deploy the schema with `sanity schema deploy` when required by the Context setup.
+10. Create/build the Sanity Knowledge Base and configure the Sanity Context MCP endpoint that serves it.
+11. Prove the finished agent can retrieve and reason over the Knowledge Base through Context MCP before attempting the polished user experience.
+12. Then implement the LensLink agent experience around those verified Sanity relationships.
+13. Test direct compatibility, adapter reasoning, limitations, sources, unknowns, ambiguity, and hallucination resistance.
+14. Deploy only after the core behavior is proven locally.
+15. Prepare the judge/demo evidence and final DEV submission.
 
 ## 8. Important Rules / Do Not Break
 
