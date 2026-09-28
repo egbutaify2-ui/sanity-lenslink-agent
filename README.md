@@ -7,7 +7,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 > **Challenge:** Sanity Challenge 2026 — Path One: Ship an Agent That Queries Real Content  
 > **Repository:** https://github.com/egbutaify2-ui/sanity-lenslink-agent  
 > **Last updated:** September 28, 2026  
-> **Current checkpoint:** **Milestone 3 — Initial real knowledge base is in progress. Milestone 2 is complete. Regular Sanity MCP is configured for development; final Path One Context MCP/Knowledge Base integration is still pending.**
+> **Current checkpoint:** **Milestone 4 — Source-check the real knowledge base. Milestones 2 and 3 are complete. Regular Sanity MCP is configured for development; final Path One Context MCP/Knowledge Base integration is still pending.**
 >
 > This README is the **living project handoff**. Update it after every meaningful milestone, verified fix, architecture change, or completed feature so another AI agent can quickly understand what has been done and continue from the current checkpoint without restarting the project.
 
@@ -22,7 +22,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 | Sanity Project ID | `kv3pdv23` |
 | Sanity Dataset | `production` |
 | Node requirement | 22.12+ |
-| Current checkpoint | **Milestone 3 — Build the initial structured knowledge base in progress. Regular Sanity MCP is configured, but final Context MCP/Knowledge Base integration is still pending.** |
+| Current checkpoint | **Milestone 4 — Source-check the real knowledge base. Milestones 2 and 3 are complete; final Context MCP/Knowledge Base integration is still pending.** |
 
 ## Progress Tracker
 
@@ -32,8 +32,8 @@ This is the project's **working completion tracker**. Percentages are practical 
 |---|---|---:|
 | Foundation / project setup | ✅ Complete | 100% |
 | Milestone 2 — Studio/schema/reference verification | ✅ Complete | 100% |
-| Milestone 3 — Initial real knowledge base | ⏳ Next | 0% |
-| Milestone 4 — Source verification | ⏳ Pending | 0% |
+| Milestone 3 — Initial real knowledge base | ✅ Complete | 100% |
+| Milestone 4 — Source verification | ⏳ **Next** | 0% |
 | Milestone 5 — Sanity Context/MCP agent | ⏳ Pending | 0% |
 | Milestone 6 — LensLink user experience | ⏳ Pending | 0% |
 | Milestone 7 — Prove structured reasoning | ⏳ Pending | 0% |
@@ -45,8 +45,8 @@ This is the project's **working completion tracker**. Percentages are practical 
 
 ### Practical progress checkpoints
 
-- **Current:** foundation + Milestone 2 complete; overall practical progress is estimated at **~20%**.
-- **After Milestone 3:** real structured knowledge base exists.
+- **Current:** foundation + Milestones 2 and 3 complete; overall practical progress is estimated at **~30%**.
+- **After Milestone 3:** the real structured knowledge base exists and the temporary Milestone 2 test records have been removed.
 - **After Milestone 5:** the core Sanity-powered agent architecture is connected and retrieval is proven.
 - **After Milestone 6:** the core LensLink product experience should be working; overall practical progress is estimated at **~70%**.
 - **After Milestones 7–11:** the core behavior is proven, hardened, polished, deployed, and demo-ready.
@@ -288,8 +288,11 @@ Existing foundation:
 - The web application builds successfully with Next.js 16.3.6.
 - The current web page can fetch camera records through the existing `CAMERAS_QUERY`.
 - **Milestone 2 is complete:** the six Studio forms and the required references have been manually verified, including publish/reopen persistence and editing of the Compatibility Rule.
-- Temporary Milestone 2 test records currently exist in the Sanity dataset. **Remove these test records before creating the real knowledge base** unless they are intentionally repurposed.
-- No meaningful real compatibility knowledge base has been intentionally populated yet.
+- **Milestone 3 is complete:** the temporary test records were removed and a small connected real Canon knowledge base was populated.
+- Real Milestone 3 records created: 3 mounts (Canon RF Mount, Canon EF Mount, Canon EF-M Mount), 1 camera (Canon EOS R5), 3 lenses (Canon RF50mm F1.8 STM, Canon EF 50mm f/1.8 STM, Canon EF-M 22mm f/2 STM), 1 adapter (Canon Mount Adapter EF-EOS R), 3 compatibility rules (direct, adapter-required, not compatible), and supporting Source records.
+- The current real knowledge graph demonstrates direct compatibility, adapter-required compatibility, and an explicitly unsupported EF-M case.
+- **No Milestone 2 test records remain.**
+- Milestone 4 is now the next task: source-check and clean the real knowledge base.
 - No Sanity Context/MCP agent integration has been implemented yet.
 - **Sanity MCP setup is configured for the development AI tools**, but live VS Code MCP access still needs to be verified when AI credits are available.
 - The final LensLink AI compatibility experience has not been built yet.
@@ -309,7 +312,7 @@ Existing foundation:
 
 ### Milestone 3 — Build the initial knowledge base
 
-**Status: ⏳ NEXT**
+**Status: ✅ COMPLETE**
 
 This is the **next task**.
 
@@ -322,11 +325,11 @@ Requirements:
 - Keep the dataset intentionally small; do not create hundreds of records.
 - Build records so the relationship graph can demonstrate direct compatibility, adapter-required compatibility, and incompatible/unknown cases.
 - Attach Source records to important claims.
-- Do not use the temporary Milestone 2 test records as real knowledge unless deliberately verified and repurposed.
+- Temporary Milestone 2 test records were removed after verification; do not reintroduce them into the production knowledge base.
 
 ### Milestone 4 — Source-check the data
 
-**Status: ⏳ PENDING**
+**Status: ⏳ NEXT**
 
 Use authoritative manufacturer documentation where available.
 
@@ -425,9 +428,8 @@ Use the Path One submission template, publish the DEV post, include `#sanitychal
 1. Do not recreate the repository, Studio, schemas, or Sanity project.
 2. Read this handoff and the existing Studio/web code before making architecture changes.
 3. Treat **Milestone 2 as complete**. Do not repeat the schema verification unless a later change breaks it.
-4. Remove or clearly isolate the temporary Milestone 2 test records before the real knowledge base is created.
-5. Populate a small connected knowledge base using real camera/lens/mount/adapter facts and authoritative sources.
-6. Source-check every important compatibility claim.
+4. Treat **Milestone 3 as complete**. The temporary test records have been removed and the real Canon knowledge base is populated.
+5. Start **Milestone 4** by source-checking every important compatibility claim, cleaning any weak/duplicated evidence, and making sure each important record points to the correct Source.
 7. When VS Code AI credits are available, first verify the already-configured regular Sanity MCP connection in read-only mode; do not mutate content during this verification.
 8. Build the real knowledge base through the verified Sanity MCP workflow where appropriate.
 9. Deploy the schema with `sanity schema deploy` when required by the Context setup.
