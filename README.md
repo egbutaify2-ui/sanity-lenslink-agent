@@ -6,8 +6,8 @@ AI camera gear compatibility agent powered by structured Sanity content.
 >
 > **Challenge:** Sanity Challenge 2026 — Path One: Ship an Agent That Queries Real Content  
 > **Repository:** https://github.com/egbutaify2-ui/sanity-lenslink-agent  
-> **Last updated:** September 26, 2026  
-> **Current checkpoint:** **Milestone 3 — Initial real knowledge base is next. Milestone 2 is complete. Regular Sanity MCP is configured for development; final Path One Context MCP/Knowledge Base integration is still pending.**
+> **Last updated:** September 28, 2026  
+> **Current checkpoint:** **Milestone 3 — Initial real knowledge base is in progress. Milestone 2 is complete. Regular Sanity MCP is configured for development; final Path One Context MCP/Knowledge Base integration is still pending.**
 >
 > This README is the **living project handoff**. Update it after every meaningful milestone, verified fix, architecture change, or completed feature so another AI agent can quickly understand what has been done and continue from the current checkpoint without restarting the project.
 
@@ -22,7 +22,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 | Sanity Project ID | `kv3pdv23` |
 | Sanity Dataset | `production` |
 | Node requirement | 22.12+ |
-| Current checkpoint | **Milestone 3 — Build the initial structured knowledge base next. Regular Sanity MCP is configured, but final Context MCP/Knowledge Base integration is still pending.** |
+| Current checkpoint | **Milestone 3 — Build the initial structured knowledge base in progress. Regular Sanity MCP is configured, but final Context MCP/Knowledge Base integration is still pending.** |
 
 ## Progress Tracker
 
@@ -129,7 +129,33 @@ Every entry must include:
 - A published **DEV submission post** using the challenge submission template and `#sanitychallenge`.
 - The **Sanity project ID or a public dataset URL**. citeturn568345search0turn568345search1
 
-The challenge page also says that if the app requires login, testing credentials and/or clear testing instructions should be provided to judges. An agent-session transcript is encouraged. citeturn568345search1
+The challenge page also says that if the app requires login, testing credentials and/or clear testing instructions should be provided to judges. An agent-session transcript is encouraged. citeturn538407search2
+
+
+### Submission checklist for Milestone 12
+
+Before submitting, verify every item below:
+
+**Required**
+- [ ] Publish a project write-up on DEV using the official **Path One submission template**.
+- [ ] Include the required challenge tag: `#sanitychallenge`.
+- [ ] Include the **Sanity project ID** (`kv3pdv23`) or a link to a **public dataset URL**.
+- [ ] Make the final project available to judges and follow any testing instructions required by the submission.
+- [ ] If the app requires login, provide **testing credentials and/or clear instructions** for judges.
+- [ ] Make sure the published post accurately explains the build and the actual architecture used.
+
+**Encouraged**
+- [ ] Include/curate an **agent-session transcript** or embed the agent session in the DEV post.
+- [ ] Show evidence of the Knowledge Base and Sanity Context MCP flow in the demo/write-up.
+- [ ] Show how structured content/relationships materially affect LensLink's answers.
+
+**Timing**
+- Contest starts: **September 18, 2026**
+- Submissions due: **October 4, 2026 at 11:59 PM PDT**
+- Winners announced: **October 22, 2026**
+
+Official rules and challenge page should remain the final authority for eligibility and any rule changes. The README is a project continuity document, not a replacement for the official contest rules. citeturn538407search0turn538407search1turn538407search2
+
 
 ### Alignment decision
 
