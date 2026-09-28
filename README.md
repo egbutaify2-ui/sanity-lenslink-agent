@@ -144,6 +144,48 @@ The main planning adjustment is that Milestone 3–5 must be treated as one conn
 
 Do not treat regular Sanity MCP as a substitute for Context MCP in the final architecture.
 
+## Challenge Alignment Check — Verified September 28, 2026
+
+The official Sanity Challenge Path One requires an agent that queries real content through **Sanity Context MCP backed by a Knowledge Base**. The judging criteria specifically include:
+
+- Meaningful use of Sanity Context and structured content
+- Technical implementation and code quality
+- Use of Knowledge Bases
+- Usability
+
+The challenge also says the strongest submissions should demonstrate that the agent only works well because the content was structured, rather than producing an answer that ordinary keyword search could have produced. Every submission must include the Sanity project ID or a public dataset URL, and the submission must be a DEV post using `#sanitychallenge`. If login is required, testing credentials/instructions should be included. Agent-session evidence is optional but encouraged. citeturn548955search5turn548955search8
+
+### Roadmap adjustment based on the official requirements
+
+Our current architecture remains aligned, but **Milestone 5 is explicitly a Knowledge Base + Context MCP milestone**, not merely a generic MCP connection.
+
+The intended path is now:
+
+**Structured Sanity dataset**
+→ **Sanity Knowledge Base built from the dataset**
+→ **Knowledge Base reviewed for entries/issues**
+→ **Sanity Context MCP endpoint serving only the Knowledge Base**
+→ **LensLink agent reads the Knowledge Base through MCP**
+→ **Agent produces evidence-backed compatibility answers**
+
+Sanity's current documentation confirms that a Knowledge Base can use a Sanity dataset as a source, builds entries ahead of time, and serves those entries to agents through Context MCP in Knowledge Base mode. A Context MCP endpoint with only Knowledge Base sources serves Knowledge Base tools; mixing a dataset source into the same endpoint makes it serve GROQ mode instead. citeturn548955search0turn548955search1turn548955search3
+
+### What this means for our milestones
+
+- **Milestone 3:** Build the small, real structured camera/lens/mount/adapter/compatibility/source dataset.
+- **Milestone 4:** Source-check every important claim and make sure evidence is attached correctly.
+- **Milestone 5:** Create the Sanity Knowledge Base from the dataset, build the entries, review important issues/conflicts, create a Context MCP endpoint backed by that Knowledge Base, connect LensLink to it, and prove retrieval.
+- **Milestone 6:** Build the polished user-facing LensLink experience around that verified Knowledge Base connection.
+- **Milestone 7:** Prove through specific demo questions that the structured relationships and grounded content materially affect the answer.
+- **Milestones 8–12:** Test, polish, deploy, document, and submit.
+
+Knowledge Bases are currently a beta feature, and the challenge page notes a current index limit of 150 documents. That makes our plan for a **small, highly connected knowledge base** appropriate rather than trying to build a huge catalog. citeturn548955search5turn548955search0
+
+### Critical Context MCP prerequisite
+
+For a dataset-backed Context MCP in GROQ mode, Sanity currently requires a deployed schema. However, our challenge path should use a **Knowledge Base-only Context MCP endpoint**, so the agent ultimately reads the built Knowledge Base entries rather than relying solely on direct GROQ access. citeturn511347search1turn548955search4
+
+
 ## 1. What LensLink Is
 
 LensLink is an AI camera-gear compatibility agent. A user should be able to ask questions such as:
