@@ -142,6 +142,100 @@ function renderAnswerBlock(block: AnswerBlock, index: number) {
   return <p key={index}>{renderInlineText(block.text)}</p>;
 }
 
+/* ---------- Presentation-only components (no logic) ---------- */
+
+function LensLinkMark({ id, size = 32 }: { id: string; size?: number }) {
+  return (
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      height={size}
+      viewBox="0 0 48 48"
+      width={size}
+    >
+      <defs>
+        <linearGradient id={`${id}-core`} x1="12" x2="36" y1="10" y2="40" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#9d8cff" />
+          <stop offset="0.55" stopColor="#6d5efc" />
+          <stop offset="1" stopColor="#3b82f6" />
+        </linearGradient>
+        <radialGradient id={`${id}-shine`} cx="0.3" cy="0.25" r="0.7">
+          <stop offset="0" stopColor="#fff" stopOpacity="0.85" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <rect fill="#141418" height="48" rx="13" width="48" />
+      <circle cx="24" cy="24" fill="none" r="15.5" stroke="#fff" strokeOpacity="0.9" strokeWidth="2" />
+      <circle cx="24" cy="24" fill={`url(#${id}-core)`} r="10" />
+      <circle cx="24" cy="24" fill={`url(#${id}-shine)`} r="10" />
+      <path
+        d="M24 14.5l4.2 7.3M33.5 24l-8.4 0.1M28.6 32.4l-4.2-7.3M19.4 32.6l4.2-7.2M14.5 24l8.4-0.2M19.6 15.6l4.1 7.2"
+        stroke="#fff"
+        strokeLinecap="round"
+        strokeOpacity="0.55"
+        strokeWidth="1.2"
+      />
+      <circle cx="24" cy="24" fill="#141418" r="2.6" />
+      <circle cx="35.5" cy="12.5" fill="#8ee0c4" r="2.4" />
+    </svg>
+  );
+}
+
+function IconCamera() {
+  return (
+    <svg aria-hidden="true" fill="none" height="18" viewBox="0 0 24 24" width="18">
+      <path d="M4 8.5A2.5 2.5 0 016.5 6h1.2l1-1.5h6.6l1 1.5h1.2A2.5 2.5 0 0120 8.5v8a2.5 2.5 0 01-2.5 2.5h-11A2.5 2.5 0 014 16.5v-8z" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.6" />
+      <circle cx="12" cy="12.5" r="3.2" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}
+
+function IconLink() {
+  return (
+    <svg aria-hidden="true" fill="none" height="18" viewBox="0 0 24 24" width="18">
+      <path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1" stroke="currentColor" strokeLinecap="round" strokeWidth="1.6" />
+      <path d="M14 10a4 4 0 00-5.7 0l-3 3A4 4 0 0011 18.7l1-1" stroke="currentColor" strokeLinecap="round" strokeWidth="1.6" />
+    </svg>
+  );
+}
+
+function IconHelp() {
+  return (
+    <svg aria-hidden="true" fill="none" height="18" viewBox="0 0 24 24" width="18">
+      <circle cx="12" cy="12" r="8.2" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M9.6 9.7a2.5 2.5 0 114 2c-.9.6-1.6 1.1-1.6 2.1" stroke="currentColor" strokeLinecap="round" strokeWidth="1.6" />
+      <circle cx="12" cy="16.6" fill="currentColor" r="0.9" />
+    </svg>
+  );
+}
+
+function IconArrowUp() {
+  return (
+    <svg aria-hidden="true" fill="none" height="16" viewBox="0 0 24 24" width="16">
+      <path d="M12 19V5M5.5 11.5L12 5l6.5 6.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" />
+    </svg>
+  );
+}
+
+function IconChevron() {
+  return (
+    <svg aria-hidden="true" fill="none" height="14" viewBox="0 0 24 24" width="14">
+      <path d="M9 5l7 7-7 7" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+    </svg>
+  );
+}
+
+function IconDatabase() {
+  return (
+    <svg aria-hidden="true" fill="none" height="15" viewBox="0 0 24 24" width="15">
+      <ellipse cx="12" cy="6" rx="7" ry="2.8" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M5 6v6c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8V6M5 12v6c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8v-6" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}
+
+const exampleIcons = [IconCamera, IconLink, IconHelp];
+
 export default function Home() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
@@ -242,138 +336,182 @@ export default function Home() {
     }
   }
 
+  const hasThread = isLoading || status === "success";
+
+  const composer = (
+    <form className="composer" onSubmit={handleSubmit}>
+      <label className="sr-only" htmlFor="gear-question">
+        Your camera and lens
+      </label>
+      <textarea
+        autoComplete="off"
+        id="gear-question"
+        name="question"
+        onChange={(event) => setQuestion(event.target.value)}
+        onKeyDown={handleQuestionKeyDown}
+        placeholder="Will the Canon EF 50mm f/1.8 STM work with my EOS R5?"
+        value={question}
+        disabled={isLoading}
+        rows={3}
+      />
+      {status === "error" && (
+        <p className="form-error" role="alert">{errorMessage}</p>
+      )}
+      <div className="composer-bar">
+        <span className="form-note">
+          Answers are checked against LensLink&apos;s technical knowledge.
+        </span>
+        <button className="submit-button" disabled={isLoading} type="submit">
+          {isLoading ? (
+            <span aria-hidden="true" className="button-spinner" />
+          ) : (
+            <IconArrowUp />
+          )}
+          <span>{isLoading ? "Checking..." : "Check compatibility"}</span>
+        </button>
+      </div>
+    </form>
+  );
+
   return (
-    <main className="site-shell">
-      <header className="site-header">
-        <a aria-label="LensLink home" className="wordmark" href="/">
-          <span aria-hidden="true" className="wordmark-mark">L</span>
-          <span>LensLink</span>
-        </a>
-        <span className="header-caption">Camera gear compatibility</span>
-      </header>
+    <main className="app-frame">
+      <div className="app-surface">
+        <header className="topbar">
+          <a aria-label="LensLink home" className="brand" href="/">
+            <LensLinkMark id="brand" size={30} />
+            <span className="brand-name">LensLink</span>
+          </a>
+          <span className="topbar-caption">Camera gear compatibility</span>
+        </header>
 
-      <div className="page-content">
-        <section aria-labelledby="page-title" className="hero">
-          <div>
-            <p className="eyebrow"><span aria-hidden="true" /> Lens and camera, checked together</p>
-            <h1 id="page-title">Check camera<br />compatibility.</h1>
-            <p className="hero-description">
-              Camera gear compatibility, grounded in real technical evidence.
-            </p>
-          </div>
-          <p className="hero-note">
-            Know what fits, what needs an adapter, and what the evidence supports.
-          </p>
-        </section>
-
-        <div className="question-layout">
-          <section aria-labelledby="question-title" className="question-panel">
-            <div className="section-heading">
-              <span className="section-index">01</span>
-              <div>
-                <p className="section-kicker">Compatibility check</p>
-                <h2 id="question-title">What are you pairing?</h2>
+        <div className={`stage${hasThread ? " stage-thread" : ""}`}>
+          {!hasThread && (
+            <section aria-labelledby="page-title" className="welcome">
+              <div className="orb" aria-hidden="true">
+                <LensLinkMark id="orb" size={64} />
               </div>
-            </div>
+              <h1 id="page-title">
+                Check camera
+                <br />
+                compatibility.
+              </h1>
+              <p className="welcome-sub">
+                Camera gear compatibility, grounded in real technical evidence.
+              </p>
+            </section>
+          )}
 
-            <form className="question-form" onSubmit={handleSubmit}>
-              <label htmlFor="gear-question">Your camera and lens</label>
-              <textarea
-                autoComplete="off"
-                id="gear-question"
-                name="question"
-                onChange={(event) => setQuestion(event.target.value)}
-                onKeyDown={handleQuestionKeyDown}
-                placeholder="Will the Canon EF 50mm f/1.8 STM work with my EOS R5?"
-                value={question}
-                disabled={isLoading}
-                rows={3}
-              />
-              {status === "error" && (
-                <p className="form-error" role="alert">{errorMessage}</p>
-              )}
-              <div className="submit-row">
-                <span className="form-note">Answers are checked against LensLink's technical knowledge.</span>
-                <button className="submit-button" disabled={isLoading} type="submit">
-                  <span>{isLoading ? "Checking..." : "Check compatibility"}</span>
-                  <span aria-hidden="true" className="button-arrow">&#8599;</span>
-                </button>
+          {!hasThread && (
+            <section aria-labelledby="examples-title" className="examples">
+              <div className="row-head">
+                <h2 id="examples-title">Start with an example</h2>
+                <span>Try a real setup</span>
               </div>
-            </form>
-          </section>
-
-          <aside aria-labelledby="examples-title" className="examples-panel">
-            <p className="section-kicker">Try a real setup</p>
-            <h2 id="examples-title">Start with an example</h2>
-            <div className="example-list">
-              {exampleQuestions.map((example, index) => (
-                <button
-                  className="example-button"
-                  disabled={isLoading}
-                  key={example}
-                  onClick={() => void checkQuestion(example)}
-                  type="button"
-                >
-                  <span className="example-index">0{index + 1}</span>
-                  <span>{example}</span>
-                  <span aria-hidden="true" className="example-arrow">&#8594;</span>
-                </button>
-              ))}
-            </div>
-          </aside>
-        </div>
-
-        {isLoading && (
-          <div aria-live="polite" className="loading-state" role="status">
-            <span aria-hidden="true" className="loading-indicator" />
-            <span>Checking camera and lens compatibility...</span>
-          </div>
-        )}
-
-        {status === "success" && (
-          <section aria-labelledby="result-title" aria-live="polite" className="result-panel">
-            <div className="result-heading">
-              <div>
-                <p className="section-kicker">LensLink response</p>
-                <h2 id="result-title">Compatibility result</h2>
+              <div className="example-grid">
+                {exampleQuestions.map((example, index) => {
+                  const Icon = exampleIcons[index % exampleIcons.length];
+                  return (
+                    <button
+                      className={`example-card tone-${index + 1}`}
+                      disabled={isLoading}
+                      key={example}
+                      onClick={() => void checkQuestion(example)}
+                      type="button"
+                    >
+                      <span aria-hidden="true" className="example-icon">
+                        <Icon />
+                      </span>
+                      <span className="example-text">{example}</span>
+                      <span aria-hidden="true" className="example-chevron">
+                        <IconChevron />
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
-              <span className="result-question">{question}</span>
-            </div>
+            </section>
+          )}
 
-            {answerBlocks.length > 0 && (
-              <>
-                <div className="result-assessment">
-                  <p className="result-label">Assessment</p>
-                  <div className="answer-copy">
-                    {renderAnswerBlock(answerBlocks[0], 0)}
-                  </div>
-                </div>
+          {hasThread && (
+            <section aria-label="Conversation" className="thread">
+              <div className="msg msg-user">
+                <span className="msg-author">You</span>
+                <p className="bubble">{question}</p>
+              </div>
 
-                {answerBlocks.length > 1 && (
-                  <div className="result-details">
-                    <h3>Reasoning and evidence</h3>
-                    <div className="answer-copy">
-                      {answerBlocks.slice(1).map(renderAnswerBlock)}
+              {isLoading && (
+                <div aria-live="polite" className="msg msg-ai" role="status">
+                  <div className="ai-head">
+                    <LensLinkMark id="load" size={28} />
+                    <div>
+                      <span className="ai-name">LensLink</span>
+                      <span className="ai-sub">Checking camera and lens compatibility...</span>
                     </div>
                   </div>
-                )}
-              </>
-            )}
-
-            <div className="retrieval-details">
-              <h3>Knowledge Base retrieval</h3>
-              {toolNames.length > 0 ? (
-                <ul aria-label="Context MCP tools used" className="tool-list">
-                  {toolNames.map((toolName) => <li key={toolName}>{toolName}</li>)}
-                </ul>
-              ) : (
-                <p>Retrieval activity was not included with this response.</p>
+                  <div aria-hidden="true" className="skeleton">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                </div>
               )}
-            </div>
-          </section>
-        )}
 
-        <footer className="site-footer">
+              {status === "success" && (
+                <article
+                  aria-labelledby="result-title"
+                  aria-live="polite"
+                  className="msg msg-ai result-card"
+                >
+                  <div className="ai-head">
+                    <LensLinkMark id="answer" size={28} />
+                    <div>
+                      <span className="ai-name">LensLink</span>
+                      <h2 className="ai-sub" id="result-title">Compatibility result</h2>
+                    </div>
+                  </div>
+
+                  {answerBlocks.length > 0 && (
+                    <>
+                      <div className="assessment">
+                        <p className="label">Assessment</p>
+                        <div className="answer-copy answer-lead">
+                          {renderAnswerBlock(answerBlocks[0], 0)}
+                        </div>
+                      </div>
+
+                      {answerBlocks.length > 1 && (
+                        <div className="details">
+                          <h3>Reasoning and evidence</h3>
+                          <div className="answer-copy">
+                            {answerBlocks.slice(1).map(renderAnswerBlock)}
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  )}
+
+                  <div className="retrieval">
+                    <h3>
+                      <IconDatabase />
+                      Knowledge Base retrieval
+                    </h3>
+                    {toolNames.length > 0 ? (
+                      <ul aria-label="Context MCP tools used" className="tool-list">
+                        {toolNames.map((toolName) => <li key={toolName}>{toolName}</li>)}
+                      </ul>
+                    ) : (
+                      <p>Retrieval activity was not included with this response.</p>
+                    )}
+                  </div>
+                </article>
+              )}
+            </section>
+          )}
+
+          <div className={`composer-dock${hasThread ? " is-docked" : ""}`}>{composer}</div>
+        </div>
+
+        <footer className="footer">
           <span>LensLink</span>
           <span>Camera compatibility, with the evidence in view.</span>
         </footer>
