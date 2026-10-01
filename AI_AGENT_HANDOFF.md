@@ -186,34 +186,51 @@ Both variables were verified as non-empty and the file is Git-ignored.
 
 Do not prefix either variable with `NEXT_PUBLIC_`.
 
-### What remains in Milestone 5
+### Context MCP retrieval smoke test — VERIFIED
 
-The next task is the **actual Context MCP retrieval smoke test**.
+The actual Context MCP retrieval layer has now been tested successfully.
 
-The application has not yet proven that it can connect to the Context MCP endpoint and retrieve real LensLink Knowledge Base content.
+Verified:
+- MCP connection succeeded.
+- Knowledge Base ID: `kbgd2ZLPDgQG`
+- Tools discovered:
+  - `initial_context`
+  - `knowledge_base_read`
+  - `knowledge_base_search`
+- `initial_context` succeeded.
+- `knowledge_base_read` succeeded.
+- Retrieved entry paths:
+  - `compatibility/canon_eos_r5`
+  - `lenses/canon_ef_primes`
+  - `lenses/canon_rf_primes`
+- Retrieved evidence covered all three core LensLink scenarios:
+  - RF50mm + EOS R5 = direct
+  - EF50mm + EOS R5 = adapter required
+  - EF-M 22mm + EOS R5 = unsupported/evidence-limited
 
-The repository also does not yet have a finished AI provider/agent implementation or provider API key.
+`@ai-sdk/mcp` was added to the web workspace for MCP client integration.
 
-The correct order is:
+### Security action required before production
 
-1. Verify server-side MCP connectivity using `SANITY_CONTEXT_MCP_URL` + `SANITY_ORGANIZATION_TOKEN`.
-2. Discover the Knowledge Base-mode MCP tools.
-3. Verify `initial_context`.
-4. Verify `knowledge_base_read`.
-5. Retrieve real LensLink entries.
-6. Prove the retrieved material contains the camera/mount/lens/adapter/compatibility information needed for the three demo scenarios.
-7. Only after MCP retrieval is proven, choose/verify the smallest suitable AI SDK/provider architecture and build the user-facing agent.
-8. Keep all Sanity credentials server-side.
+The VS Code agent reported that the organization token was inadvertently exposed during a previous inspection operation. Treat that token as compromised.
 
-Expected Knowledge Base-mode MCP tools include:
-- `initial_context`
-- `knowledge_base_read`
+Before production use:
+1. Revoke/rotate the current organization token in Sanity Manage.
+2. Create a replacement organization token with Context Viewer permission.
+3. Update only the local `web/.env.local` value.
+4. Never commit or paste the token into chat.
+5. Keep token usage server-side.
 
-Do not substitute:
-- direct GROQ queries
-- normal Sanity MCP
-- mocked MCP responses
-- hard-coded compatibility answers
+### Remaining Milestone 5 work
+
+The MCP retrieval layer is verified, but Milestone 5 is not fully complete yet.
+
+Remaining:
+1. Configure an AI provider/model and server-side provider credential.
+2. Build the actual LensLink agent loop using the verified Context MCP retrieval layer.
+3. Run the three core user questions through the real agent.
+4. Verify grounded answers and source evidence.
+5. Update `README.md` and this handoff after the agent loop is actually verified.
 
 ## Three Core Verification Questions
 
@@ -370,21 +387,20 @@ After each meaningful completed task:
 
 1. Read `README.md` and this file.
 2. Treat Milestones 1–4 as complete.
-3. Treat Knowledge Base creation/build and Context endpoint creation as complete.
-4. Verify server-side Context MCP retrieval.
-5. Confirm `initial_context` and `knowledge_base_read`.
-6. Retrieve real LensLink entries for the three core scenarios.
-7. Select/configure the smallest appropriate AI provider/SDK only after retrieval is proven.
-8. Build the server-side LensLink agent.
-9. Test the three core questions through the real MCP-backed agent.
-10. Update `README.md` and this handoff with Milestone 5 evidence.
-11. Move to Milestone 6 and build the polished user-facing experience.
-12. Prove structured reasoning (Milestone 7).
-13. Test/harden (Milestone 8).
-14. UX quality pass (Milestone 9).
-15. Deploy (Milestone 10).
-16. Prepare demo evidence (Milestone 11).
-17. Prepare and submit the DEV Path One post (Milestone 12).
+3. Treat Knowledge Base creation/build as complete.
+4. Treat Context MCP endpoint creation and MCP retrieval smoke test as complete/verified.
+5. Rotate the compromised organization token before production use.
+6. Configure the smallest suitable AI provider/server-side model integration.
+7. Build the LensLink agent loop around the existing Context MCP retrieval.
+8. Test the three core compatibility questions through the real agent.
+9. Update `README.md` and this handoff with the verified results.
+10. Move to Milestone 6 user experience.
+11. Prove structured reasoning (Milestone 7).
+12. Test/harden (Milestone 8).
+13. UX quality pass (Milestone 9).
+14. Deploy (Milestone 10).
+15. Prepare demo evidence (Milestone 11).
+16. Prepare and submit the DEV Path One post (Milestone 12).
 
 ## Do Not Do These Things
 
@@ -423,7 +439,7 @@ Milestones **1–4 = complete**.
 
 Milestone **5 = in progress**.
 
-Sanity side of Milestone 5:
+Sanity/Context MCP side of Milestone 5:
 - schema deployed ✅
 - Knowledge Base created ✅
 - Knowledge Base built ✅
@@ -431,10 +447,16 @@ Sanity side of Milestone 5:
 - Context enabled ✅
 - organization Context Viewer token created ✅
 - MCP endpoint created ✅
-- endpoint ready to connect ✅
-- server-side env variables present ✅
+- MCP retrieval smoke test passed ✅
+- `initial_context` passed ✅
+- `knowledge_base_read` passed ✅
+- real LensLink entries retrieved ✅
 
-Current blocker/next action:
-**prove real Context MCP retrieval from the application, then build the actual AI agent.**
+Current next action:
+**rotate the compromised organization token, then configure the real AI/provider loop and prove the three core LensLink questions through the MCP-backed agent.**
 
-Once a future agent takes over, it should start from that exact point rather than recreating the project or repeating Milestones 1–4.
+The final user-facing LensLink UI has not been completed yet.
+
+## Last Update
+
+October 1, 2026 — Context MCP retrieval was successfully verified. The project is now past the main Sanity retrieval infrastructure gate and ready for the model/agent implementation.
