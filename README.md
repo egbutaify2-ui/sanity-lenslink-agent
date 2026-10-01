@@ -6,8 +6,8 @@ AI camera gear compatibility agent powered by structured Sanity content.
 >
 > **Challenge:** Sanity Challenge 2026 — Path One: Ship an Agent That Queries Real Content  
 > **Repository:** https://github.com/egbutaify2-ui/sanity-lenslink-agent  
-> **Last updated:** September 28, 2026  
-> **Current checkpoint:** **Milestone 4 — Source-check the real knowledge base. Milestones 2 and 3 are complete. Regular Sanity MCP is configured for development; final Path One Context MCP/Knowledge Base integration is still pending.**
+> **Last updated:** October 1, 2026
+> **Current checkpoint:** **Milestone 5 — Sanity Knowledge Base + Context MCP core retrieval verified. The production Knowledge Base and Context MCP endpoint are connected and real LensLink Knowledge Base entries have been retrieved. AI provider/agent UX is still pending.**
 >
 > This README is the **living project handoff**. Update it after every meaningful milestone, verified fix, architecture change, or completed feature so another AI agent can quickly understand what has been done and continue from the current checkpoint without restarting the project.
 
@@ -33,8 +33,8 @@ This is the project's **working completion tracker**. Percentages are practical 
 | Foundation / project setup | ✅ Complete | 100% |
 | Milestone 2 — Studio/schema/reference verification | ✅ Complete | 100% |
 | Milestone 3 — Initial real knowledge base | ✅ Complete | 100% |
-| Milestone 4 — Source verification | ⏳ **Next** | 0% |
-| Milestone 5 — Sanity Context/MCP agent | ⏳ Pending | 0% |
+| Milestone 4 — Source verification | ✅ Complete | 100% |
+| Milestone 5 — Sanity Context/MCP agent | ⏳ **In Progress — MCP core verified** | 75% |
 | Milestone 6 — LensLink user experience | ⏳ Pending | 0% |
 | Milestone 7 — Prove structured reasoning | ⏳ Pending | 0% |
 | Milestone 8 — Testing / hardening | ⏳ Pending | 0% |
@@ -212,6 +212,54 @@ Knowledge Bases are currently a beta feature, and the challenge page notes a cur
 For a dataset-backed Context MCP in GROQ mode, Sanity currently requires a deployed schema. However, our challenge path should use a **Knowledge Base-only Context MCP endpoint**, so the agent ultimately reads the built Knowledge Base entries rather than relying solely on direct GROQ access. citeturn511347search1turn548955search4
 
 
+
+## Milestone 5 — Context MCP Retrieval Checkpoint — Verified October 1, 2026
+
+The Sanity Knowledge Base and Context MCP retrieval layer are now proven.
+
+### Verified
+
+- ✅ Existing Studio schema deployed to `kv3pdv23 / production`.
+- ✅ Knowledge Base created: `kbgd2ZLPDgQG`.
+- ✅ Knowledge Base state: Ready.
+- ✅ Knowledge Base build: 8 entries, 0 issues, 0 critical issues, 0 uncited content, 0 missing entities.
+- ✅ Context enabled for organization `ompq0fxun`.
+- ✅ Organization API token created with Context Viewer permission.
+- ✅ Dedicated MCP endpoint created: `lenslink-agent`.
+- ✅ Endpoint uses only the LensLink Knowledge Base, so it is Knowledge Base mode.
+- ✅ `@ai-sdk/mcp` added to the web workspace for the MCP client.
+- ✅ Server-side environment variables exist in `web/.env.local` and are Git-ignored.
+- ✅ Context MCP connection succeeded.
+- ✅ Discovered Knowledge Base tools: `initial_context`, `knowledge_base_read`, `knowledge_base_search`.
+- ✅ `initial_context` succeeded.
+- ✅ `knowledge_base_read` succeeded.
+- ✅ Retrieved real LensLink entries including `compatibility/canon_eos_r5`, `lenses/canon_ef_primes`, and `lenses/canon_rf_primes`.
+- ✅ Retrieved evidence for all three core scenarios: RF direct, EF adapter-required, and EF-M unsupported/evidence-limited.
+- ✅ Web build passed.
+- ✅ Studio build passed.
+
+### Security action required
+
+The VS Code agent reported that the organization token was inadvertently exposed during a previous inspection operation. Treat that token as compromised.
+
+Before production use:
+- rotate/revoke the current organization token in Sanity Manage;
+- create a replacement organization token with Context Viewer permission;
+- update only the local `web/.env.local` value;
+- never commit or paste the token into chat.
+
+The endpoint URL and token must remain server-side.
+
+### What remains in Milestone 5
+
+- Connect the MCP retrieval layer to the actual LLM/agent implementation.
+- Configure a suitable AI provider and server-side provider credential.
+- Build a minimal grounded LensLink agent that uses Context MCP rather than hard-coded answers.
+- Run the three core questions through the real agent and verify source-grounded responses.
+- Update this README again only after those tests pass.
+
+Milestone 5 is **not fully complete yet**. The **Context MCP core retrieval layer is verified**; the final model/agent loop is still pending.
+
 ## 1. What LensLink Is
 
 LensLink is an AI camera-gear compatibility agent. A user should be able to ask questions such as:
@@ -293,7 +341,7 @@ Existing foundation:
 - The current real knowledge graph demonstrates direct compatibility, adapter-required compatibility, and an explicitly unsupported EF-M case.
 - **No Milestone 2 test records remain.**
 - Milestone 4 is now the next task: source-check and clean the real knowledge base.
-- No Sanity Context/MCP agent integration has been implemented yet.
+- **Sanity Context MCP retrieval has now been implemented and verified; the full LLM/agent loop is still pending.**
 - **Sanity MCP setup is configured for the development AI tools**, but live VS Code MCP access still needs to be verified when AI credits are available.
 - The final LensLink AI compatibility experience has not been built yet.
 
@@ -426,19 +474,15 @@ Use the Path One submission template, publish the DEV post, include `#sanitychal
 ## 7. Exact Continuation Order for the Next AI
 
 1. Do not recreate the repository, Studio, schemas, or Sanity project.
-2. Read this handoff and the existing Studio/web code before making architecture changes.
-3. Treat **Milestone 2 as complete**. Do not repeat the schema verification unless a later change breaks it.
-4. Treat **Milestone 3 as complete**. The temporary test records have been removed and the real Canon knowledge base is populated.
-5. Start **Milestone 4** by source-checking every important compatibility claim, cleaning any weak/duplicated evidence, and making sure each important record points to the correct Source.
-7. When VS Code AI credits are available, first verify the already-configured regular Sanity MCP connection in read-only mode; do not mutate content during this verification.
-8. Build the real knowledge base through the verified Sanity MCP workflow where appropriate.
-9. Deploy the schema with `sanity schema deploy` when required by the Context setup.
-10. Create/build the Sanity Knowledge Base and configure the Sanity Context MCP endpoint that serves it.
-11. Prove the finished agent can retrieve and reason over the Knowledge Base through Context MCP before attempting the polished user experience.
-12. Then implement the LensLink agent experience around those verified Sanity relationships.
-13. Test direct compatibility, adapter reasoning, limitations, sources, unknowns, ambiguity, and hallucination resistance.
-14. Deploy only after the core behavior is proven locally.
-15. Prepare the judge/demo evidence and final DEV submission.
+2. Read this README and `AI_AGENT_HANDOFF.md` before making architecture changes.
+3. Treat Milestones 1–4 as complete.
+4. Treat Knowledge Base creation/build and Context MCP retrieval as verified.
+5. Rotate the compromised organization Context token before production use, then update only local `web/.env.local`.
+6. Complete the server-side AI/provider integration on top of Context MCP.
+7. Test the three core LensLink questions through the real MCP-backed agent.
+8. Update the README and handoff with the verified agent results.
+9. Then implement Milestone 6, followed by Milestones 7–12.
+10. Prepare judge/demo evidence and the final DEV submission.
 
 ## 8. Important Rules / Do Not Break
 
