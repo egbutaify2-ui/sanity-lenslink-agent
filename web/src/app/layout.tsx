@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "LensLink",
-  description: "AI camera gear compatibility powered by structured Sanity content",
+  description: "Camera gear compatibility, grounded in real technical evidence.",
 };
 
 export default function RootLayout({
