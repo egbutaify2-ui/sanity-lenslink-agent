@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 
 const exampleQuestions = [
   "Will the Canon RF50mm F1.8 STM work with the EOS R5?",
@@ -254,6 +254,21 @@ export default function Home() {
   const isLoading = activeMessage?.status === "loading";
   const hasThread = conversation.length > 0;
 
+  const latestTurnRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (conversation.length === 0) return;
+
+    const frameId = window.requestAnimationFrame(() => {
+      latestTurnRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [conversation.length]);
+
   function updateConversationEntry(id: string, update: Partial<ConversationEntry>) {
     setConversation((entries) =>
       entries.map((entry) => (entry.id === id ? { ...entry, ...update } : entry)),
@@ -459,7 +474,11 @@ export default function Home() {
                   entry.status === "success" ? parseAnswer(entry.answer ?? "") : [];
 
                 return (
-                  <div className="conversation-turn" key={entry.id}>
+                  <div
+                    className="conversation-turn"
+                    key={entry.id}
+                    ref={entryIndex === conversation.length - 1 ? latestTurnRef : undefined}
+                  >
                     <div className="msg msg-user">
                       <span className="msg-author">You</span>
                       <p className="bubble">{entry.question}</p>
@@ -558,6 +577,12 @@ export default function Home() {
         <footer className="footer">
           <span>LensLink</span>
           <span>Camera compatibility, with the evidence in view.</span>
+          <span className="footer-attribution">
+            Built by Egbuta Ifeanyi Chukwu ·{" "}
+            <a href="https://github.com/egbutaify2-ui" rel="noreferrer" target="_blank">
+              @egbutaify2-ui
+            </a>
+          </span>
         </footer>
       </div>
     </main>

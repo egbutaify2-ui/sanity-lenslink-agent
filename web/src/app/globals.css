@@ -457,6 +457,10 @@ textarea {
   gap: 22px;
 }
 
+.conversation-turn {
+  scroll-margin-top: 24px;
+}
+
 .msg-user {
   display: flex;
   flex-direction: column;
@@ -692,6 +696,22 @@ textarea {
 .footer span:first-child {
   color: var(--ink-2);
   font-weight: 600;
+}
+
+
+.footer-attribution {
+  margin-left: auto;
+}
+
+.footer-attribution a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-attribution a:hover {
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* ---------- Responsive ---------- */
