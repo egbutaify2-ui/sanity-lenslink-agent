@@ -1,4 +1,5 @@
 import { createMCPClient } from "@ai-sdk/mcp";
+import { requiresKnowledgeBase } from "./lenslink-routing";
 import { generateText, stepCountIs, type LanguageModel } from "ai";
 
 const knowledgeBaseId = "kbgd2ZLPDgQG";
@@ -7,22 +8,6 @@ const conversationalSystemPrompt = `You are LensLink, a camera-gear compatibilit
 
 For greetings, thanks, and other simple conversational messages, respond naturally and briefly. You may explain what LensLink does and how to ask it camera-gear questions. Do not invent camera or lens facts. Compatibility and factual gear questions must be handled through the structured LensLink Knowledge Base route.`;
 
-const knowledgeQuestionSignals = [
-  /\bcompatib/i,
-  /\bcamera(s)?\b/i,
-  /\blens(es)?\b/i,
-  /\bmount(s|ed|ing)?\b/i,
-  /\badapter(s)?\b/i,
-  /\beos\b/i,
-  /\brf(?:-|\s)?\d/i,
-  /\bef(?:-|\s)?(?:m|\d)/i,
-  /\b(?:supported|support|specification|specs|technical|knowledge base)\\b/i,
-  /\b(?:work|fit|attach|use)\\b.*\\b(?:with|on|for)\\b/i,
-];
-
-export function requiresKnowledgeBase(question: string): boolean {
-  return knowledgeQuestionSignals.some((signal) => signal.test(question));
-}
 
 const systemPrompt = `You are LensLink, a camera-gear compatibility agent.
 

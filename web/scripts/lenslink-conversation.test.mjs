@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { requiresKnowledgeBase } from "../src/lib/lenslink-agent.ts";
+import { requiresKnowledgeBase } from "../src/lib/lenslink-routing.ts";
 
 function appendConversation(entries, entry) {
   return [...entries, entry];
