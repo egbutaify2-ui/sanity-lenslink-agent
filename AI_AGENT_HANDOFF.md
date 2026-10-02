@@ -78,10 +78,19 @@ Regular Sanity MCP is useful for development/content management but is **not** t
 - `npx tsc --noEmit -p web/tsconfig.json`, `npm run build:web`, and `git diff --check` passed.
 - Studio CDN limitation remains: the October 2 Studio build recheck timed out fetching `sanity-cdn.com` before compilation; Studio had passed at the previous checkpoint and was not changed in M8.
 
-### Current next milestone
-**Milestone 9 — UX quality pass.**
+### Milestone 9 — Final UX, brand, and presentation polish
+**COMPLETE — verified October 2, 2026**
 
-The premium visual/brand polish discussed separately is a later UX-quality pass and must not change the verified agent/MCP architecture.
+- Preserved the existing premium layout and custom LensLink mark; changed only the shared muted-text color token in `web/src/app/globals.css`.
+- Contrast improved from 3.41:1 to 5.26:1 on white, 3.27:1 to 5.05:1 on the soft surface, and measures 4.79:1 against the frame.
+- Desktop (1440px), tablet (768px), and mobile (390px) were visually checked; no horizontal overflow. Keyboard focus and the existing reduced-motion behavior were checked.
+- No UI component, agent, API, or MCP logic changed. M7 proof source is untouched; its final required regression run refreshed the evidence JSON.
+- M7 proof, API tests (4/4), TypeScript check, and web build passed after the polish. Studio's previously recorded CDN timeout remains unrelated and unresolved.
+
+### Current next milestone
+**Milestone 10 — Deployment.**
+
+Milestone 9's visual polish is complete; preserve the verified agent/MCP architecture in future presentation work.
 
 ## Milestone 5 — Sanity Knowledge Base + Context MCP
 
@@ -351,13 +360,12 @@ After each meaningful completed task:
 ## Exact Current Continuation Order
 
 1. Read `README.md` and this file.
-2. Treat Milestones 1–8 as complete; do not repeat the live Milestone 7 proof unless validating a change or refreshed evidence.
+2. Treat Milestones 1–9 as complete; do not repeat the live Milestone 7 proof unless validating a change or refreshed evidence.
 3. Do not rebuild the Sanity project, Knowledge Base, Context MCP endpoint, or Gemini agent.
-4. Start **Milestone 9 — UX quality pass**, including the planned premium visual identity work; preserve the verified backend and UI behavior.
-5. Deploy the web app to Render (Milestone 10) with server-side environment variables.
-6. Prepare judge/demo evidence (Milestone 11).
-7. Prepare and submit the DEV Path One post (Milestone 12).
-8. Update this handoff after every meaningful verified checkpoint.
+4. Start **Milestone 10 — Deployment**; configure only server-side environment variables in the hosting platform.
+5. Prepare judge/demo evidence (Milestone 11).
+6. Prepare and submit the DEV Path One post (Milestone 12).
+7. Update this handoff after every meaningful verified checkpoint.
 
 ## Do Not Do These Things
 
@@ -392,7 +400,7 @@ The project's success criterion is a convincing, reproducible demonstration that
 
 **Current state:**
 
-Milestones **1–8 = complete**. Milestone 9 is next; Milestones 10–12 remain pending.
+Milestones **1–9 = complete**. Milestone 10 is next; Milestones 11–12 remain pending.
 
 Milestone 7 is proven by the live test command `npm run test:milestone-7` and the real call/response evidence in `web/milestone-7-evidence.json`. Direct RF, adapter-required EF, and unsupported/evidence-limited EF-M scenarios all passed against the configured live Knowledge Base.
 
@@ -410,8 +418,9 @@ Completed and verified in the current worktree:
 - Live structured-reasoning proof and recorded Context MCP evidence ✅
 - Deterministic MCP pre-retrieval and API hardening ✅
 - API tests (4/4), TypeScript check, web production build, and whitespace check ✅
+- Final visual/accessibility polish: muted text contrast improved; desktop/tablet/mobile and focus/reduced-motion checks completed ✅
 - Web production build ✅
-- Milestone 9 is next; Milestones 10–12 remain pending.
+- Milestone 10 is next; Milestones 11–12 remain pending.
 
 GitHub commit:
 `8ecb0eb`
@@ -420,4 +429,4 @@ The premium visual/brand polish is intentionally deferred to the later UX-qualit
 
 ## Last Update
 
-October 2, 2026 — Milestone 8 retrieval hardening and validation complete; three consecutive live M7 proof runs passed after the fix. Milestone 9 is next.
+October 2, 2026 — Milestone 9 final UX/accessibility polish complete; Milestone 10 deployment is next.

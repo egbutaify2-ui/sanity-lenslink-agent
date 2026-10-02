@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T04:07:21.952Z",
+  "generatedAt": "2026-10-02T04:14:16.509Z",
   "complete": true,
   "source": "Live LensLink agent backed by Sanity Context MCP",
   "knowledgeBaseId": "kbgd2ZLPDgQG",
@@ -21,7 +21,7 @@
     {
       "id": "rf-direct",
       "question": "Is the Canon RF50mm F1.8 STM compatible with the Canon EOS R5?",
-      "answer": "Yes, the **Canon RF 50mm f/1.8 STM** lens is **directly compatible** with the **Canon EOS R5** [compatibility/canon_eos_r5, lenses/canon_rf_primes].\n\n### Compatibility Details:\n* **Native Fit:** The RF 50mm f/1.8 STM features a native Canon RF mount designed specifically for the EOS R System, meaning it mounts directly to the EOS R5 with **no adapter required** [compatibility/canon_eos_r5, lenses/canon_rf_primes].\n* **Functionality:** All electronic functions and autofocus (using the STM stepper motor) are fully supported [compatibility/canon_eos_r5, lenses/canon_rf_primes].\n\n### Sources:\n* `compatibility/canon_eos_r5`\n* `lenses/canon_rf_primes`",
+      "answer": "Yes, the **Canon RF 50mm f/1.8 STM** lens is **directly compatible** with the **Canon EOS R5** [1]. \n\nHere are the details of the pairing:\n* **Compatibility:** Native (direct fit) [1].\n* **Adapter Required:** No adapter is needed; the lens connects directly to the EOS R5's RF mount [2].\n* **Electronic Functions:** All electronic functions are fully supported [2].\n\n### Sources\n1. Canon EOS R5 Lens Compatibility — `compatibility/canon_eos_r5`\n2. Canon RF Prime Lenses — `lenses/canon_rf_primes`",
       "toolCalls": [
         {
           "toolName": "initial_context",
@@ -85,7 +85,7 @@
     {
       "id": "ef-adapter-required",
       "question": "Can I use the Canon EF50mm f/1.8 STM on the Canon EOS R5?",
-      "answer": "Yes, you can use the Canon EF 50mm f/1.8 STM on the Canon EOS R5, but **it requires the Canon Mount Adapter EF-EOS R** to connect the EF-mount lens to the EOS R5's RF-mount body [compatibility/canon_eos_r5]. \n\nWith the adapter, full electronic communication is maintained, preserving autofocus, exposure metering, and image stabilization [mounts/adapters].",
+      "answer": "Yes, you can use the Canon EF 50mm f/1.8 STM on the Canon EOS R5, but **it requires the Canon Mount Adapter EF-EOS R** to connect the EF-mount lens to the EOS R5's RF-mount body [compatibility/canon_eos_r5, adapters]. \n\n### Key Details:\n* **Adapter Required:** Because the Canon EF 50mm f/1.8 STM features a Canon EF mount and the EOS R5 uses a Canon RF mirrorless mount, an adapter is necessary [compatibility/canon_eos_r5, lenses/canon_ef_primes].\n* **Feature Pass-Through:** When using the Canon Mount Adapter EF-EOS R, full electronic communication is maintained, supporting autofocus (STM), exposure metering, and automated functions [adapters].\n\n*(Note: There is also a native **RF** version of this lens—the Canon RF 50mm f/1.8 STM—which mounts directly to the EOS R5 without any adapter [compatibility/canon_eos_r5, lenses/lens_rf_primes].)*\n\n**Sources:**\n* Canon EOS R5 Lens Compatibility (`compatibility/canon_eos_r5`)\n* Canon EF and EF-M Prime Lenses (`lenses/canon_ef_primes`)\n* Mount Adapters & Feature Pass-Through (`adapters`)",
       "toolCalls": [
         {
           "toolName": "initial_context",
@@ -149,7 +149,7 @@
     {
       "id": "ef-m-evidence-limited",
       "question": "Is the Canon EF-M 22mm f/2 STM compatible with the Canon EOS R5?",
-      "answer": "No, the **Canon EF-M 22mm f/2 STM** is **not compatible** with the **Canon EOS R5** [1]. \n\n### Reason & Details:\n* **Mount Mismatch:** The Canon EOS R5 features a native Canon RF mirrorless mount, whereas the EF-M 22mm f/2 STM lens is designed exclusively for the Canon EOS M-series APS-C mirrorless system (using the EF-M mount) [1][2].\n* **No Adapter Support:** Canon does not document EF-M support through any adapter for the EOS R system, and the Canon Mount Adapter EF-EOS R only supports EF and EF-S lenses (not EF-M lenses) [2]. \n\n### Sources:\n1. `compatibility/canon_eos_r5` (Canon EOS R5 Lens Compatibility — Dataset)\n2. `lenses/canon_ef_primes` (Canon EF-M 22mm f/2 STM — Dataset)",
+      "answer": "No, the **Canon EF-M 22mm f/2 STM** is **not compatible** with the **Canon EOS R5** [1]. \n\n### Explanation\n* **Mount Difference:** The EF-M 22mm f/2 STM is designed exclusively for Canon's EOS M-series APS-C mirrorless cameras using the EF-M mount [2]. The Canon EOS R5 is a full-frame mirrorless camera that uses the native Canon RF mount [3].\n* **Adapters:** The Canon Mount Adapter EF-EOS R supports EF and EF-S lenses on EOS R-series bodies, but it does **not** support EF-M mount lenses [1][4]. There is no supported adapter available to mount EF-M lenses onto EOS R cameras [4].\n\n### Sources\n1. Canon EOS R5 Lens Compatibility — Dataset (`compatibility/canon_eos_r5`)\n2. Canon EF-M 22mm f/2 STM — Dataset (`lenses/canon_ef_primes`)\n3. Camera Bodies & Specifications — Dataset (`cameras`)\n4. Canon EOS R5 + Canon EF-M 22mm f/2 STM — Not Compatible — Dataset (`compatibility/canon_eos_r5`)",
       "toolCalls": [
         {
           "toolName": "initial_context",

@@ -7,7 +7,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 > **Challenge:** Sanity Challenge 2026 — Path One: Ship an Agent That Queries Real Content  
 > **Repository:** https://github.com/egbutaify2-ui/sanity-lenslink-agent  
 > **Last updated:** October 2, 2026
-> **Current checkpoint:** **Milestone 8 — testing and hardening complete. Milestone 9 is next. Premium visual/brand polish remains a later UX-quality pass.**
+> **Current checkpoint:** **Milestone 9 — final UX, brand, and presentation polish complete. Milestone 10 is next.**
 >
 > This README is the **living project handoff**. Update it after every meaningful milestone, verified fix, architecture change, or completed feature so another AI agent can quickly understand what has been done and continue from the current checkpoint without restarting the project.
 
@@ -22,7 +22,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 | Sanity Project ID | `kv3pdv23` |
 | Sanity Dataset | `production` |
 | Node requirement | 22.12+ |
-| Current checkpoint | **Milestone 8 — testing and hardening complete; Milestone 9 is next.** |
+| Current checkpoint | **Milestone 9 — final UX, brand, and presentation polish complete; Milestone 10 is next.** |
 
 ## Progress Tracker
 
@@ -38,14 +38,14 @@ This is the project's **working completion tracker**. Percentages are practical 
 | Milestone 6 — LensLink user experience | ✅ Complete | 100% |
 | Milestone 7 — Prove structured reasoning | ✅ Complete | 100% |
 | Milestone 8 — Testing / hardening | ✅ Complete | 100% |
-| Milestone 9 — UX quality pass | ⏳ **Next** | 0% |
-| Milestone 10 — Deployment | ⏳ Pending | 0% |
+| Milestone 9 — UX quality pass | ✅ Complete | 100% |
+| Milestone 10 — Deployment | ⏳ **Next** | 0% |
 | Milestone 11 — Demo evidence | ⏳ Pending | 0% |
 | Milestone 12 — DEV submission | ⏳ Pending | 0% |
 
 ### Practical progress checkpoints
 
-- **Current:** Milestones 1–8 are complete; overall practical progress is estimated at **~85%**.
+- **Current:** Milestones 1–9 are complete; overall practical progress is estimated at **~90%**.
 - **After Milestone 3:** the real structured knowledge base exists and the temporary Milestone 2 test records have been removed.
 - **After Milestone 5:** the complete Sanity Context MCP + Gemini agent loop is verified with all three core scenarios.
 - **After Milestone 6:** the core LensLink product experience is implemented and verified; overall practical progress is estimated at **~75%**.
@@ -64,12 +64,14 @@ The percentages are used only to track our own movement through the project. The
 - ✅ Milestone 8 complete: deterministic Context MCP pre-retrieval now runs before Gemini answers; three consecutive live M7 proof runs passed after the fix.
 - ✅ API validation tests passed 4/4; TypeScript check and web production build passed; `git diff --check` passed.
 - ✅ API rejects malformed, null, missing, and blank questions with safe `400` responses; empty agent output is returned as a safe `502` instead of an empty `200`.
+- ✅ Milestone 9 complete: muted text contrast was raised from 3.41:1 to 5.26:1 on white while preserving the existing LensLink design and mark.
+- ✅ Desktop (1440px), tablet (768px), and mobile (390px) layouts were checked with no horizontal overflow; keyboard focus remains visible and reduced-motion support is present.
 - ✅ Real Gemini + Context MCP flow remains the backend source of truth.
 - ✅ Web build passes.
 - ⚠️ Studio build passed at the previous checkpoint; the October 2 recheck was blocked before compilation by a Sanity CDN connection timeout.
 - ✅ Completed work pushed to GitHub `main` in commit `8ecb0eb`.
-- ⏳ Milestone 9 is next: final UX quality pass.
-- ⏳ A later UX-quality/brand pass can refine the visual identity and premium presentation without changing the verified backend architecture.
+- ⏳ Milestone 10 is next: deployment.
+- ✅ Final UX/brand polish is complete; preserve the verified backend architecture in future presentation work.
 
 ### Milestone 7 — Live structured-reasoning proof
 
@@ -96,6 +98,14 @@ The agent now performs `initial_context → knowledge_base_search → knowledge_
 Validation: three consecutive live `npm run test:milestone-7` runs passed after the retrieval change; `npm run test:api` passed 4/4; `npx tsc --noEmit -p web/tsconfig.json`, `npm run build:web`, and `git diff --check` passed. The request validation tests cover malformed JSON, null/non-object bodies, absent or blank questions, and trimming. The live UI/API checks covered valid answers, retrieval-tool display, connection errors, empty submission, and desktop/mobile overflow without changing the UI.
 
 The Studio build's October 2 recheck remains blocked before compilation by a timeout fetching `sanity-cdn.com`; it passed at the previous checkpoint. No Studio changes were part of Milestone 8.
+
+### Milestone 9 — Final UX, brand, and presentation polish
+
+**Status: ✅ COMPLETE — verified October 2, 2026**
+
+The existing premium layout and custom LensLink mark were retained. The shared muted-text token changed from `#8a8a96` to `#6b6b76`, improving contrast from 3.41:1 to 5.26:1 on white, 3.27:1 to 5.05:1 on the soft surface, and 4.79:1 on the frame. No component layout, UI logic, or backend behavior changed.
+
+The local UI was inspected at 1440px, 768px, and 390px; all widths had no horizontal overflow and controls/cards remained usable. Keyboard focus was verified on the branded home link, and existing `prefers-reduced-motion` behavior was confirmed. The M7 proof source remains untouched; its required final live run refreshed only `web/milestone-7-evidence.json`.
 
 ## Sanity MCP Setup Checkpoint
 
@@ -451,7 +461,7 @@ The agent must not invent facts or URLs.
 
 ### Milestone 9 — UX quality pass
 
-**Status: ⏳ NEXT**
+**Status: ✅ COMPLETE — verified October 2, 2026**
 
 Check:
 
@@ -467,7 +477,7 @@ Check:
 
 ### Milestone 10 — Deploy
 
-**Status: ⏳ PENDING**
+**Status: ⏳ NEXT**
 
 Deploy the Next.js application.
 
