@@ -508,7 +508,7 @@ export default function Home() {
                           <div>
                             <span className="ai-name">LensLink</span>
                             <h2 className="ai-sub" id={`result-title-${entry.id}`}>
-                              Compatibility result
+                              {entry.toolNames.length > 0 ? "Compatibility result" : "LensLink response"}
                             </h2>
                           </div>
                         </div>
