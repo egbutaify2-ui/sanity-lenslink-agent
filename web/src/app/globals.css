@@ -455,9 +455,6 @@ textarea {
   display: flex;
   flex-direction: column;
   gap: 22px;
-}
-
-.conversation-turn {
   scroll-margin-top: 24px;
 }
 
@@ -817,6 +814,10 @@ textarea {
     flex-direction: column;
     gap: 4px;
     padding: 14px 16px;
+  }
+
+  .footer-attribution {
+    margin-left: 0;
   }
 }
 

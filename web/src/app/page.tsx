@@ -261,7 +261,7 @@ export default function Home() {
 
     const frameId = window.requestAnimationFrame(() => {
       latestTurnRef.current?.scrollIntoView({
-        behavior: "smooth",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
         block: "start",
       });
     });
