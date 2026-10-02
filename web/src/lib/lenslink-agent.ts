@@ -3,6 +3,27 @@ import { generateText, stepCountIs, type LanguageModel } from "ai";
 
 const knowledgeBaseId = "kbgd2ZLPDgQG";
 
+const conversationalSystemPrompt = `You are LensLink, a camera-gear compatibility agent.
+
+For greetings, thanks, and other simple conversational messages, respond naturally and briefly. You may explain what LensLink does and how to ask it camera-gear questions. Do not invent camera or lens facts. Compatibility and factual gear questions must be handled through the structured LensLink Knowledge Base route.`;
+
+const knowledgeQuestionSignals = [
+  /\\bcompatib/i,
+  /\\bcamera(s)?\\b/i,
+  /\\blens(es)?\\b/i,
+  /\\bmount(s|ed|ing)?\\b/i,
+  /\\badapter(s)?\\b/i,
+  /\\beos\\b/i,
+  /\\brf(?:-|\\s)?\\d/i,
+  /\\bef(?:-|\\s)?(?:m|\\d)/i,
+  /\\b(?:supported|support|specification|specs|technical|knowledge base)\\b/i,
+  /\\b(?:work|fit|attach|use)\\b.*\\b(?:with|on|for)\\b/i,
+];
+
+export function requiresKnowledgeBase(question: string): boolean {
+  return knowledgeQuestionSignals.some((signal) => signal.test(question));
+}
+
 const systemPrompt = `You are LensLink, a camera-gear compatibility agent.
 
 Answer camera, lens, mount, adapter, and compatibility questions using the LensLink Knowledge Base through the supplied Context MCP tools. Prefer structured relationships between cameras, lenses, mounts, adapters, compatibility rules, and sources over unsupported assumptions.
@@ -43,6 +64,20 @@ export async function answerLensLinkQuestion(
   question: string,
   model: LanguageModel,
 ): Promise<LensLinkAgentResult> {
+  if (!requiresKnowledgeBase(question)) {
+    const result = await generateText({
+      model,
+      system: conversationalSystemPrompt,
+      prompt: question,
+    });
+
+    return {
+      text: result.text,
+      toolCalls: [],
+      toolResults: [],
+    };
+  }
+
   const endpoint = process.env.SANITY_CONTEXT_MCP_URL;
   const token = process.env.SANITY_ORGANIZATION_TOKEN;
 

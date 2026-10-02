@@ -237,33 +237,50 @@ function IconDatabase() {
 const exampleIcons = [IconCamera, IconLink, IconHelp];
 
 export default function Home() {
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [toolNames, setToolNames] = useState<string[]>([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
-    "idle",
-  );
+  type ConversationEntry = {
+    id: string;
+    question: string;
+    status: "loading" | "success" | "error";
+    answer?: string;
+    toolNames: string[];
+    errorMessage?: string;
+  };
 
-  const isLoading = status === "loading";
-  const answerBlocks = status === "success" ? parseAnswer(answer) : [];
+  const [question, setQuestion] = useState("");
+  const [conversation, setConversation] = useState<ConversationEntry[]>([]);
+  const [formError, setFormError] = useState("");
+
+  const activeMessage = conversation[conversation.length - 1];
+  const isLoading = activeMessage?.status === "loading";
+  const hasThread = conversation.length > 0;
+
+  function updateConversationEntry(id: string, update: Partial<ConversationEntry>) {
+    setConversation((entries) =>
+      entries.map((entry) => (entry.id === id ? { ...entry, ...update } : entry)),
+    );
+  }
 
   async function checkQuestion(nextQuestion: string) {
     const trimmedQuestion = nextQuestion.trim();
-    setQuestion(nextQuestion);
 
     if (!trimmedQuestion) {
-      setAnswer("");
-      setToolNames([]);
-      setErrorMessage("Enter a camera and lens to check compatibility.");
-      setStatus("error");
+      setFormError("Enter a camera and lens question, or ask LensLink something else.");
       return;
     }
 
-    setAnswer("");
-    setToolNames([]);
-    setErrorMessage("");
-    setStatus("loading");
+    setFormError("");
+    setQuestion("");
+
+    const id = crypto.randomUUID();
+    setConversation((entries) => [
+      ...entries,
+      {
+        id,
+        question: trimmedQuestion,
+        status: "loading",
+        toolNames: [],
+      },
+    ]);
 
     const controller = new AbortController();
     const timeoutId = window.setTimeout(() => controller.abort(), 120_000);
@@ -278,20 +295,23 @@ export default function Home() {
       const payload = (await response.json().catch(() => null)) as LensLinkResponse | null;
 
       if (!response.ok) {
-        setErrorMessage(
-          response.status === 503
-            ? "LensLink's model provider is not configured right now."
-            : response.status === 400
-              ? "Please enter a camera and lens question."
-              : "LensLink couldn't complete this check. Please try again in a moment.",
-        );
-        setStatus("error");
+        updateConversationEntry(id, {
+          status: "error",
+          errorMessage:
+            response.status === 503
+              ? "LensLink's model provider is not configured right now."
+              : response.status === 400
+                ? "Please enter a camera and lens question."
+                : "LensLink couldn't complete this check. Please try again in a moment.",
+        });
         return;
       }
 
       if (!payload || typeof payload.answer !== "string" || !payload.answer.trim()) {
-        setErrorMessage("LensLink returned no answer. Please try the check again.");
-        setStatus("error");
+        updateConversationEntry(id, {
+          status: "error",
+          errorMessage: "LensLink returned no answer. Please try the check again.",
+        });
         return;
       }
 
@@ -309,16 +329,18 @@ export default function Home() {
           })
         : [];
 
-      setAnswer(payload.answer);
-      setToolNames([...new Set(returnedTools)]);
-      setStatus("success");
+      updateConversationEntry(id, {
+        status: "success",
+        answer: payload.answer,
+        toolNames: [...new Set(returnedTools)],
+      });
     } catch {
-      setErrorMessage(
-        controller.signal.aborted
+      updateConversationEntry(id, {
+        status: "error",
+        errorMessage: controller.signal.aborted
           ? "This check took longer than expected. Please try again."
           : "LensLink couldn't connect. Check your connection and try again.",
-      );
-      setStatus("error");
+      });
     } finally {
       window.clearTimeout(timeoutId);
     }
@@ -336,8 +358,6 @@ export default function Home() {
     }
   }
 
-  const hasThread = isLoading || status === "success";
-
   const composer = (
     <form className="composer" onSubmit={handleSubmit}>
       <label className="sr-only" htmlFor="gear-question">
@@ -354,8 +374,8 @@ export default function Home() {
         disabled={isLoading}
         rows={3}
       />
-      {status === "error" && (
-        <p className="form-error" role="alert">{errorMessage}</p>
+      {formError && (
+        <p className="form-error" role="alert">{formError}</p>
       )}
       <div className="composer-bar">
         <span className="form-note">
@@ -434,77 +454,101 @@ export default function Home() {
 
           {hasThread && (
             <section aria-label="Conversation" className="thread">
-              <div className="msg msg-user">
-                <span className="msg-author">You</span>
-                <p className="bubble">{question}</p>
-              </div>
+              {conversation.map((entry, entryIndex) => {
+                const answerBlocks =
+                  entry.status === "success" ? parseAnswer(entry.answer ?? "") : [];
 
-              {isLoading && (
-                <div aria-live="polite" className="msg msg-ai" role="status">
-                  <div className="ai-head">
-                    <LensLinkMark id="load" size={28} />
-                    <div>
-                      <span className="ai-name">LensLink</span>
-                      <span className="ai-sub">Checking camera and lens compatibility...</span>
+                return (
+                  <div className="conversation-turn" key={entry.id}>
+                    <div className="msg msg-user">
+                      <span className="msg-author">You</span>
+                      <p className="bubble">{entry.question}</p>
                     </div>
-                  </div>
-                  <div aria-hidden="true" className="skeleton">
-                    <span />
-                    <span />
-                    <span />
-                  </div>
-                </div>
-              )}
 
-              {status === "success" && (
-                <article
-                  aria-labelledby="result-title"
-                  aria-live="polite"
-                  className="msg msg-ai result-card"
-                >
-                  <div className="ai-head">
-                    <LensLinkMark id="answer" size={28} />
-                    <div>
-                      <span className="ai-name">LensLink</span>
-                      <h2 className="ai-sub" id="result-title">Compatibility result</h2>
-                    </div>
-                  </div>
-
-                  {answerBlocks.length > 0 && (
-                    <>
-                      <div className="assessment">
-                        <p className="label">Assessment</p>
-                        <div className="answer-copy answer-lead">
-                          {renderAnswerBlock(answerBlocks[0], 0)}
-                        </div>
-                      </div>
-
-                      {answerBlocks.length > 1 && (
-                        <div className="details">
-                          <h3>Reasoning and evidence</h3>
-                          <div className="answer-copy">
-                            {answerBlocks.slice(1).map(renderAnswerBlock)}
+                    {entry.status === "loading" && entryIndex === conversation.length - 1 && (
+                      <div aria-live="polite" className="msg msg-ai" role="status">
+                        <div className="ai-head">
+                          <LensLinkMark id={`load-${entry.id}`} size={28} />
+                          <div>
+                            <span className="ai-name">LensLink</span>
+                            <span className="ai-sub">Checking camera and lens compatibility...</span>
                           </div>
                         </div>
-                      )}
-                    </>
-                  )}
+                        <div aria-hidden="true" className="skeleton">
+                          <span />
+                          <span />
+                          <span />
+                        </div>
+                      </div>
+                    )}
 
-                  <div className="retrieval">
-                    <h3>
-                      <IconDatabase />
-                      Knowledge Base retrieval
-                    </h3>
-                    {toolNames.length > 0 ? (
-                      <ul aria-label="Context MCP tools used" className="tool-list">
-                        {toolNames.map((toolName) => <li key={toolName}>{toolName}</li>)}
-                      </ul>
-                    ) : (
-                      <p>Retrieval activity was not included with this response.</p>
+                    {entry.status === "error" && (
+                      <div aria-live="polite" className="msg msg-ai result-card" role="alert">
+                        <div className="ai-head">
+                          <LensLinkMark id={`error-${entry.id}`} size={28} />
+                          <div>
+                            <span className="ai-name">LensLink</span>
+                            <span className="ai-sub">Unable to complete this response</span>
+                          </div>
+                        </div>
+                        <div className="answer-copy">
+                          <p>{entry.errorMessage}</p>
+                        </div>
+                      </div>
+                    )}
+
+                    {entry.status === "success" && (
+                      <article
+                        aria-labelledby={`result-title-${entry.id}`}
+                        aria-live="polite"
+                        className="msg msg-ai result-card"
+                      >
+                        <div className="ai-head">
+                          <LensLinkMark id={`answer-${entry.id}`} size={28} />
+                          <div>
+                            <span className="ai-name">LensLink</span>
+                            <h2 className="ai-sub" id={`result-title-${entry.id}`}>
+                              Compatibility result
+                            </h2>
+                          </div>
+                        </div>
+
+                        {answerBlocks.length > 0 && (
+                          <>
+                            <div className="assessment">
+                              <p className="label">Assessment</p>
+                              <div className="answer-copy answer-lead">
+                                {renderAnswerBlock(answerBlocks[0], 0)}
+                              </div>
+                            </div>
+
+                            {answerBlocks.length > 1 && (
+                              <div className="details">
+                                <h3>Reasoning and evidence</h3>
+                                <div className="answer-copy">
+                                  {answerBlocks.slice(1).map(renderAnswerBlock)}
+                                </div>
+                              </div>
+                            )}
+                          </>
+                        )}
+
+                        {entry.toolNames.length > 0 && (
+                          <div className="retrieval">
+                            <h3>
+                              <IconDatabase />
+                              Knowledge Base retrieval
+                            </h3>
+                            <ul aria-label="Context MCP tools used" className="tool-list">
+                              {entry.toolNames.map((toolName) => <li key={toolName}>{toolName}</li>)}
+                            </ul>
+                          </div>
+                        )}
+                      </article>
                     )}
                   </div>
-                </article>
-              )}
+                );
+              })}
             </section>
           )}
 
