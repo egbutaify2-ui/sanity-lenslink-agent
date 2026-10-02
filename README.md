@@ -7,7 +7,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 > **Challenge:** Sanity Challenge 2026 — Path One: Ship an Agent That Queries Real Content  
 > **Repository:** https://github.com/egbutaify2-ui/sanity-lenslink-agent  
 > **Last updated:** October 2, 2026
-> **Current checkpoint:** **Milestone 7 — structured reasoning proven against live Sanity Context MCP data. Milestone 8 is next. Premium visual/brand polish remains a later UX-quality pass.**
+> **Current checkpoint:** **Milestone 8 — testing and hardening complete. Milestone 9 is next. Premium visual/brand polish remains a later UX-quality pass.**
 >
 > This README is the **living project handoff**. Update it after every meaningful milestone, verified fix, architecture change, or completed feature so another AI agent can quickly understand what has been done and continue from the current checkpoint without restarting the project.
 
@@ -22,7 +22,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 | Sanity Project ID | `kv3pdv23` |
 | Sanity Dataset | `production` |
 | Node requirement | 22.12+ |
-| Current checkpoint | **Milestone 7 — structured reasoning proof complete; Milestone 8 is next.** |
+| Current checkpoint | **Milestone 8 — testing and hardening complete; Milestone 9 is next.** |
 
 ## Progress Tracker
 
@@ -37,15 +37,15 @@ This is the project's **working completion tracker**. Percentages are practical 
 | Milestone 5 — Sanity Context/MCP agent | ✅ Complete | 100% |
 | Milestone 6 — LensLink user experience | ✅ Complete | 100% |
 | Milestone 7 — Prove structured reasoning | ✅ Complete | 100% |
-| Milestone 8 — Testing / hardening | ⏳ **Next** | 0% |
-| Milestone 9 — UX quality pass | ⏳ Pending | 0% |
+| Milestone 8 — Testing / hardening | ✅ Complete | 100% |
+| Milestone 9 — UX quality pass | ⏳ **Next** | 0% |
 | Milestone 10 — Deployment | ⏳ Pending | 0% |
 | Milestone 11 — Demo evidence | ⏳ Pending | 0% |
 | Milestone 12 — DEV submission | ⏳ Pending | 0% |
 
 ### Practical progress checkpoints
 
-- **Current:** Milestones 1–7 are complete; overall practical progress is estimated at **~80%**.
+- **Current:** Milestones 1–8 are complete; overall practical progress is estimated at **~85%**.
 - **After Milestone 3:** the real structured knowledge base exists and the temporary Milestone 2 test records have been removed.
 - **After Milestone 5:** the complete Sanity Context MCP + Gemini agent loop is verified with all three core scenarios.
 - **After Milestone 6:** the core LensLink product experience is implemented and verified; overall practical progress is estimated at **~75%**.
@@ -61,11 +61,14 @@ The percentages are used only to track our own movement through the project. The
 - ✅ Milestone 7 complete: all three scenarios passed a live Gemini + Context MCP proof against retrieved Knowledge Base entries.
 - ✅ Evidence report records each question, model answer, tool call, read path, and actual returned MCP content in `web/milestone-7-evidence.json`.
 - ✅ `npm run test:milestone-7` and `npm run build:web` passed.
+- ✅ Milestone 8 complete: deterministic Context MCP pre-retrieval now runs before Gemini answers; three consecutive live M7 proof runs passed after the fix.
+- ✅ API validation tests passed 4/4; TypeScript check and web production build passed; `git diff --check` passed.
+- ✅ API rejects malformed, null, missing, and blank questions with safe `400` responses; empty agent output is returned as a safe `502` instead of an empty `200`.
 - ✅ Real Gemini + Context MCP flow remains the backend source of truth.
 - ✅ Web build passes.
 - ⚠️ Studio build passed at the previous checkpoint; the October 2 recheck was blocked before compilation by a Sanity CDN connection timeout.
 - ✅ Completed work pushed to GitHub `main` in commit `8ecb0eb`.
-- ⏳ Milestone 8 is next: broader testing and hardening.
+- ⏳ Milestone 9 is next: final UX quality pass.
 - ⏳ A later UX-quality/brand pass can refine the visual identity and premium presentation without changing the verified backend architecture.
 
 ### Milestone 7 — Live structured-reasoning proof
@@ -83,6 +86,16 @@ The run verified:
 - EF-M 22mm + EOS R5: not compatible per the retrieved records; read the compatibility and EF/EF-M lens entries, without claiming physical impossibility.
 
 The persisted report contains real tool inputs and returned text, not screenshots or fabricated records. Tool availability is checked by the existing agent; the report distinguishes available tools from tools invoked in each scenario. This is a live integration proof and requires valid Gemini and Context MCP credentials; it is not an offline deterministic test.
+
+### Milestone 8 — Testing and retrieval hardening
+
+**Status: ✅ COMPLETE — verified October 2, 2026**
+
+The agent now performs `initial_context → knowledge_base_search → knowledge_base_read` before Gemini generates a compatibility answer. It reads the actual ranked Knowledge Base entries returned for the user's question and includes those records in the model context; the M7 proof was not weakened or changed.
+
+Validation: three consecutive live `npm run test:milestone-7` runs passed after the retrieval change; `npm run test:api` passed 4/4; `npx tsc --noEmit -p web/tsconfig.json`, `npm run build:web`, and `git diff --check` passed. The request validation tests cover malformed JSON, null/non-object bodies, absent or blank questions, and trimming. The live UI/API checks covered valid answers, retrieval-tool display, connection errors, empty submission, and desktop/mobile overflow without changing the UI.
+
+The Studio build's October 2 recheck remains blocked before compilation by a timeout fetching `sanity-cdn.com`; it passed at the previous checkpoint. No Studio changes were part of Milestone 8.
 
 ## Sanity MCP Setup Checkpoint
 
@@ -423,7 +436,7 @@ The live proof in `web/scripts/milestone-7-proof.test.mjs` runs the existing age
 
 ### Milestone 8 — Test and harden
 
-**Status: ⏳ NEXT**
+**Status: ✅ COMPLETE — verified October 2, 2026**
 
 Test:
 
@@ -438,7 +451,7 @@ The agent must not invent facts or URLs.
 
 ### Milestone 9 — UX quality pass
 
-**Status: ⏳ PENDING**
+**Status: ⏳ NEXT**
 
 Check:
 

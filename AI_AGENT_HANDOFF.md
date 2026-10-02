@@ -68,8 +68,18 @@ Regular Sanity MCP is useful for development/content management but is **not** t
 - The proof run used `initial_context` and `knowledge_base_read` in all scenarios; `knowledge_base_search` was additionally used in the EF-M scenario. The existing agent verifies all three tools are available.
 - Validation: `npm run test:milestone-7` passed (three scenarios); `npm run build:web` passed. The October 2 `npm run build:studio` recheck could not reach `sanity-cdn.com` and timed out before compilation; it had passed at the previous checkpoint. Live tests require configured Gemini and Context MCP credentials and are not offline deterministic tests.
 
+### Milestone 8 — Testing and hardening
+**COMPLETE — verified October 2, 2026**
+
+- Deterministic pre-retrieval now runs through the existing Context MCP path: `initial_context` → `knowledge_base_search` → `knowledge_base_read`; Gemini receives the actual retrieved records before it generates an answer.
+- The existing Milestone 7 proof was not modified or weakened. Three consecutive live proof runs passed after the retrieval fix.
+- API request validation tests passed 4/4. The real API returned safe `400` responses for malformed, null, missing, and blank questions; an empty agent answer is mapped to a safe `502`.
+- UI regression checks covered initial/example, real long answer and retrieval tools, empty submission, connection error, and desktop/mobile overflow. No UI changes were made.
+- `npx tsc --noEmit -p web/tsconfig.json`, `npm run build:web`, and `git diff --check` passed.
+- Studio CDN limitation remains: the October 2 Studio build recheck timed out fetching `sanity-cdn.com` before compilation; Studio had passed at the previous checkpoint and was not changed in M8.
+
 ### Current next milestone
-**Milestone 8 — Testing and hardening.**
+**Milestone 9 — UX quality pass.**
 
 The premium visual/brand polish discussed separately is a later UX-quality pass and must not change the verified agent/MCP architecture.
 
@@ -341,14 +351,13 @@ After each meaningful completed task:
 ## Exact Current Continuation Order
 
 1. Read `README.md` and this file.
-2. Treat Milestones 1–7 as complete; do not repeat the live Milestone 7 proof unless validating a change or refreshed evidence.
+2. Treat Milestones 1–8 as complete; do not repeat the live Milestone 7 proof unless validating a change or refreshed evidence.
 3. Do not rebuild the Sanity project, Knowledge Base, Context MCP endpoint, or Gemini agent.
-4. Start **Milestone 8 — Testing and hardening**; broaden coverage to invalid, missing, ambiguous, conflicting, and unsupported cases without changing verified compatibility facts without evidence.
-5. Perform the final UX/brand quality pass (Milestone 9), including the planned premium visual identity work.
-6. Deploy the web app to Render (Milestone 10) with server-side environment variables.
-7. Prepare judge/demo evidence (Milestone 11).
-8. Prepare and submit the DEV Path One post (Milestone 12).
-9. Update this handoff after every meaningful verified checkpoint.
+4. Start **Milestone 9 — UX quality pass**, including the planned premium visual identity work; preserve the verified backend and UI behavior.
+5. Deploy the web app to Render (Milestone 10) with server-side environment variables.
+6. Prepare judge/demo evidence (Milestone 11).
+7. Prepare and submit the DEV Path One post (Milestone 12).
+8. Update this handoff after every meaningful verified checkpoint.
 
 ## Do Not Do These Things
 
@@ -383,7 +392,7 @@ The project's success criterion is a convincing, reproducible demonstration that
 
 **Current state:**
 
-Milestones **1–7 = complete**. Milestone 8 is next; Milestones 9–12 remain pending.
+Milestones **1–8 = complete**. Milestone 9 is next; Milestones 10–12 remain pending.
 
 Milestone 7 is proven by the live test command `npm run test:milestone-7` and the real call/response evidence in `web/milestone-7-evidence.json`. Direct RF, adapter-required EF, and unsupported/evidence-limited EF-M scenarios all passed against the configured live Knowledge Base.
 
@@ -399,8 +408,10 @@ Completed and pushed:
 
 Completed and verified in the current worktree:
 - Live structured-reasoning proof and recorded Context MCP evidence ✅
+- Deterministic MCP pre-retrieval and API hardening ✅
+- API tests (4/4), TypeScript check, web production build, and whitespace check ✅
 - Web production build ✅
-- Milestone 8 is next; Milestones 9–12 remain pending.
+- Milestone 9 is next; Milestones 10–12 remain pending.
 
 GitHub commit:
 `8ecb0eb`
@@ -409,4 +420,4 @@ The premium visual/brand polish is intentionally deferred to the later UX-qualit
 
 ## Last Update
 
-October 2, 2026 — Milestone 7 live proof passed for all three scenarios; progress tracker updated with Milestone 8 next.
+October 2, 2026 — Milestone 8 retrieval hardening and validation complete; three consecutive live M7 proof runs passed after the fix. Milestone 9 is next.

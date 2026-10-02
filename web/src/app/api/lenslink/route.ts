@@ -1,26 +1,25 @@
 import { answerLensLinkQuestion } from "@/lib/lenslink-agent";
 import { createLensLinkModel } from "@/lib/lenslink-model";
+import { parseLensLinkQuestion } from "@/lib/lenslink-request";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  let body: { question?: unknown };
-
-  try {
-    body = await request.json();
-  } catch {
-    return Response.json({ error: "Request body must be valid JSON" }, { status: 400 });
-  }
-
-  if (typeof body.question !== "string" || body.question.trim().length === 0) {
-    return Response.json({ error: "A non-empty question is required" }, { status: 400 });
-  }
+  const parsedQuestion = await parseLensLinkQuestion(request);
+  if (parsedQuestion instanceof Response) return parsedQuestion;
 
   try {
     const result = await answerLensLinkQuestion(
-      body.question.trim(),
+      parsedQuestion,
       createLensLinkModel(),
     );
+
+    if (!result.text.trim()) {
+      return Response.json(
+        { error: "LensLink agent request failed" },
+        { status: 502 },
+      );
+    }
 
     return Response.json({
       answer: result.text,

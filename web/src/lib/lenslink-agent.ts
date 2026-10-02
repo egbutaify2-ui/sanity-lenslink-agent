@@ -17,6 +17,28 @@ export type LensLinkAgentResult = {
   toolResults: unknown[];
 };
 
+function toolOutputText(output: unknown): string {
+  if (typeof output === "string") return output;
+  if (!output || typeof output !== "object" || !("content" in output)) return "";
+  if (!Array.isArray(output.content)) return "";
+  return output.content
+    .map((item) =>
+      typeof item === "object" && item !== null && "text" in item && typeof item.text === "string"
+        ? item.text
+        : "",
+    )
+    .join("\n");
+}
+
+function rankedKnowledgeBasePaths(searchOutput: unknown): string[] {
+  const matches = toolOutputText(searchOutput).matchAll(/^\s*\d+\.\s+`([^`]+)`/gm);
+  return [...new Set([...matches].map((match) => match[1]))];
+}
+
+function isToolError(output: unknown): boolean {
+  return typeof output === "object" && output !== null && "isError" in output && output.isError === true;
+}
+
 export async function answerLensLinkQuestion(
   question: string,
   model: LanguageModel,
@@ -49,9 +71,41 @@ export async function answerLensLinkQuestion(
       throw new Error(`Required Context MCP tools are unavailable: ${missingTools.join(", ")}`);
     }
 
+    const toolCalls: { toolName: string; input: unknown }[] = [];
+    const toolResults: { toolName: string; input: unknown; output: unknown }[] = [];
+    const callContextTool = async (toolName: string, input: unknown) => {
+      const output = await tools[toolName].execute(input, {
+        toolCallId: `lenslink-prefetch-${toolCalls.length + 1}`,
+        messages: [],
+      });
+      if (isToolError(output)) {
+        throw new Error(`Context MCP ${toolName} failed during required evidence retrieval`);
+      }
+      toolCalls.push({ toolName, input });
+      toolResults.push({ toolName, input, output });
+      return output;
+    };
+
+    const initialContextInput = {};
+    const initialContext = await callContextTool("initial_context", initialContextInput);
+    const searchInput = { knowledgeBase: knowledgeBaseId, query: question };
+    const searchResult = await callContextTool("knowledge_base_search", searchInput);
+    const paths = rankedKnowledgeBasePaths(searchResult);
+
+    if (paths.length === 0) {
+      throw new Error("Context MCP search returned no readable Knowledge Base entries");
+    }
+
+    const readInput = { knowledgeBase: knowledgeBaseId, paths };
+    const readResult = await callContextTool("knowledge_base_read", readInput);
+    const retrievedEvidence = [initialContext, searchResult, readResult]
+      .map(toolOutputText)
+      .filter(Boolean)
+      .join("\n\n");
+
     const result = await generateText({
       model,
-      system: systemPrompt,
+      system: `${systemPrompt}\n\nRequired Context MCP search and Knowledge Base reads have already completed. Base compatibility conclusions on this retrieved evidence; if it does not establish the pairing, say that it is not verified.\n\n${retrievedEvidence}`,
       prompt: question,
       tools,
       stopWhen: stepCountIs(6),
@@ -59,8 +113,8 @@ export async function answerLensLinkQuestion(
 
     return {
       text: result.text,
-      toolCalls: result.steps.flatMap((step) => step.toolCalls),
-      toolResults: result.steps.flatMap((step) => step.toolResults),
+      toolCalls: [...toolCalls, ...result.steps.flatMap((step) => step.toolCalls)],
+      toolResults: [...toolResults, ...result.steps.flatMap((step) => step.toolResults)],
     };
   } finally {
     await mcpClient.close();
