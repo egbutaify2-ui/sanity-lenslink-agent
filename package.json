@@ -10,7 +10,8 @@
     "dev:studio": "npm run dev --workspace=studio",
     "dev:web": "npm run dev --workspace=web",
     "build:studio": "npm run build --workspace=studio",
-    "build:web": "npm run build --workspace=web"
+    "build:web": "npm run build --workspace=web",
+    "test:milestone-7": "npm run test:milestone-7 --workspace=web"
   },
   "engines": {
     "node": ">=22.12.0"

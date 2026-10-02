@@ -6,8 +6,8 @@ AI camera gear compatibility agent powered by structured Sanity content.
 >
 > **Challenge:** Sanity Challenge 2026 — Path One: Ship an Agent That Queries Real Content  
 > **Repository:** https://github.com/egbutaify2-ui/sanity-lenslink-agent  
-> **Last updated:** October 1, 2026
-> **Current checkpoint:** **Milestone 6 — LensLink user experience complete and pushed to GitHub. Milestone 7 is next. Premium visual/brand polish can be handled as a later UX-quality pass.**
+> **Last updated:** October 2, 2026
+> **Current checkpoint:** **Milestone 7 — structured reasoning proven against live Sanity Context MCP data. Milestone 8 is next. Premium visual/brand polish remains a later UX-quality pass.**
 >
 > This README is the **living project handoff**. Update it after every meaningful milestone, verified fix, architecture change, or completed feature so another AI agent can quickly understand what has been done and continue from the current checkpoint without restarting the project.
 
@@ -22,7 +22,7 @@ AI camera gear compatibility agent powered by structured Sanity content.
 | Sanity Project ID | `kv3pdv23` |
 | Sanity Dataset | `production` |
 | Node requirement | 22.12+ |
-| Current checkpoint | **Milestone 6 — LensLink user experience complete; Milestone 7 is next.** |
+| Current checkpoint | **Milestone 7 — structured reasoning proof complete; Milestone 8 is next.** |
 
 ## Progress Tracker
 
@@ -36,8 +36,8 @@ This is the project's **working completion tracker**. Percentages are practical 
 | Milestone 4 — Source verification | ✅ Complete | 100% |
 | Milestone 5 — Sanity Context/MCP agent | ✅ Complete | 100% |
 | Milestone 6 — LensLink user experience | ✅ Complete | 100% |
-| Milestone 7 — Prove structured reasoning | ⏳ **Next** | 0% |
-| Milestone 8 — Testing / hardening | ⏳ Pending | 0% |
+| Milestone 7 — Prove structured reasoning | ✅ Complete | 100% |
+| Milestone 8 — Testing / hardening | ⏳ **Next** | 0% |
 | Milestone 9 — UX quality pass | ⏳ Pending | 0% |
 | Milestone 10 — Deployment | ⏳ Pending | 0% |
 | Milestone 11 — Demo evidence | ⏳ Pending | 0% |
@@ -45,7 +45,7 @@ This is the project's **working completion tracker**. Percentages are practical 
 
 ### Practical progress checkpoints
 
-- **Current:** Milestones 1–6 are complete; overall practical progress is estimated at **~75%**.
+- **Current:** Milestones 1–7 are complete; overall practical progress is estimated at **~80%**.
 - **After Milestone 3:** the real structured knowledge base exists and the temporary Milestone 2 test records have been removed.
 - **After Milestone 5:** the complete Sanity Context MCP + Gemini agent loop is verified with all three core scenarios.
 - **After Milestone 6:** the core LensLink product experience is implemented and verified; overall practical progress is estimated at **~75%**.
@@ -54,16 +54,35 @@ This is the project's **working completion tracker**. Percentages are practical 
 
 The percentages are used only to track our own movement through the project. They must not be presented as an official contest/judging score.
 
-## Current Project Checkpoint — Verified October 1, 2026
+## Current Project Checkpoint — Verified October 2, 2026
 
 - ✅ Milestones 1–5 complete.
 - ✅ Milestone 6 complete: working LensLink user experience is implemented and tested against the real `/api/lenslink` agent.
+- ✅ Milestone 7 complete: all three scenarios passed a live Gemini + Context MCP proof against retrieved Knowledge Base entries.
+- ✅ Evidence report records each question, model answer, tool call, read path, and actual returned MCP content in `web/milestone-7-evidence.json`.
+- ✅ `npm run test:milestone-7` and `npm run build:web` passed.
 - ✅ Real Gemini + Context MCP flow remains the backend source of truth.
 - ✅ Web build passes.
-- ✅ Studio build passes.
+- ⚠️ Studio build passed at the previous checkpoint; the October 2 recheck was blocked before compilation by a Sanity CDN connection timeout.
 - ✅ Completed work pushed to GitHub `main` in commit `8ecb0eb`.
-- ⏳ Milestone 7 is next: prove that structured Sanity relationships materially drive the agent's answers.
+- ⏳ Milestone 8 is next: broader testing and hardening.
 - ⏳ A later UX-quality/brand pass can refine the visual identity and premium presentation without changing the verified backend architecture.
+
+### Milestone 7 — Live structured-reasoning proof
+
+The proof uses the existing LensLink agent, Gemini model, and live Sanity Context MCP endpoint. It does not mock the model, MCP tools, or Knowledge Base. Run it with the existing server-side environment configured:
+
+```sh
+npm run test:milestone-7
+```
+
+The run verified:
+
+- RF 50mm + EOS R5: direct/native compatibility; read `compatibility/canon_eos_r5` and `lenses/canon_rf_primes`.
+- EF 50mm + EOS R5: adapter-required compatibility using the Canon Mount Adapter EF-EOS R; read the compatibility, EF lens, and adapter entries.
+- EF-M 22mm + EOS R5: not compatible per the retrieved records; read the compatibility and EF/EF-M lens entries, without claiming physical impossibility.
+
+The persisted report contains real tool inputs and returned text, not screenshots or fabricated records. Tool availability is checked by the existing agent; the report distinguishes available tools from tools invoked in each scenario. This is a live integration proof and requires valid Gemini and Context MCP credentials; it is not an offline deterministic test.
 
 ## Sanity MCP Setup Checkpoint
 
@@ -261,15 +280,9 @@ Before production use:
 
 The endpoint URL and token must remain server-side.
 
-### What remains in Milestone 5
+### Milestone 5 completion status
 
-- Connect the MCP retrieval layer to the actual LLM/agent implementation.
-- Configure a suitable AI provider and server-side provider credential.
-- Build a minimal grounded LensLink agent that uses Context MCP rather than hard-coded answers.
-- Run the three core questions through the real agent and verify source-grounded responses.
-- Update this README again only after those tests pass.
-
-Milestone 5 is **not fully complete yet**. The **Context MCP core retrieval layer is verified**; the final model/agent loop is still pending.
+Milestone 5 is complete: the Gemini agent uses the live Context MCP tools, and all three core questions have now been verified through that agent. The repeatable live proof and its actual retrieval evidence are documented under Milestone 7 below.
 
 ## 1. What LensLink Is
 
@@ -351,8 +364,9 @@ Existing foundation:
 - Real Milestone 3 records created: 3 mounts (Canon RF Mount, Canon EF Mount, Canon EF-M Mount), 1 camera (Canon EOS R5), 3 lenses (Canon RF50mm F1.8 STM, Canon EF 50mm f/1.8 STM, Canon EF-M 22mm f/2 STM), 1 adapter (Canon Mount Adapter EF-EOS R), 3 compatibility rules (direct, adapter-required, not compatible), and supporting Source records.
 - The current real knowledge graph demonstrates direct compatibility, adapter-required compatibility, and an explicitly unsupported EF-M case.
 - **No Milestone 2 test records remain.**
-- Milestone 7 is now the next task: prove structured reasoning and relationship-driven answers.
-- **Sanity Context MCP retrieval has now been implemented and verified; the full LLM/agent loop is still pending.**
+- **Milestone 7 is complete:** the full Gemini + Context MCP loop passed direct RF, adapter-required EF, and unsupported/evidence-limited EF-M scenarios.
+- Milestone 8 is next: broaden testing and harden behavior.
+- **Sanity Context MCP retrieval and the full LLM/agent loop are verified** by the live run recorded in `web/milestone-7-evidence.json`.
 - **Sanity MCP setup is configured for the development AI tools**, but live VS Code MCP access still needs to be verified when AI credits are available.
 - **The LensLink AI compatibility experience is implemented and the completed Milestone 5/6 work is pushed to GitHub.**
 
@@ -373,40 +387,25 @@ Existing foundation:
 
 **Status: ✅ COMPLETE**
 
-This is the **next task**.
-
-Create a small, carefully connected set of **real** camera, lens, mount, adapter, compatibility rule, and source records.
-
-Requirements:
-
-- Use real camera and lens compatibility facts.
-- Prefer authoritative manufacturer documentation for the supporting evidence.
-- Keep the dataset intentionally small; do not create hundreds of records.
-- Build records so the relationship graph can demonstrate direct compatibility, adapter-required compatibility, and incompatible/unknown cases.
-- Attach Source records to important claims.
-- Temporary Milestone 2 test records were removed after verification; do not reintroduce them into the production knowledge base.
+The small, connected production dataset includes real camera, lens, mount, adapter, compatibility-rule, and source records. Temporary Milestone 2 test records were removed after verification.
 
 ### Milestone 4 — Source-check the data
 
-**Status: ⏳ NEXT**
+**Status: ✅ COMPLETE**
 
-Use authoritative manufacturer documentation where available.
+Important claims were source-checked against manufacturer documentation where available, with supporting Source records attached.
 
-Attach Source records to important claims and record relevant evidence/notes.
-
-Do not enter unsupported assumptions.
+No unsupported assumptions should be added to the production knowledge base.
 
 ### Milestone 5 — Create Knowledge Base + connect Sanity Context MCP
 
-**Status: ⏳ PENDING — critical Path One requirement**
+**Status: ✅ COMPLETE**
 
-Deploy the Sanity schema, create/build the Knowledge Base from the verified structured content, create a Sanity Context MCP endpoint in the appropriate mode, connect the LensLink agent to that endpoint, verify retrieval of Cameras/Lenses/Mounts/Adapters/Rules/Sources, and test reference traversal and evidence grounding.
-
-The finished agent must use **Sanity Context MCP**, not regular Sanity MCP, for its content retrieval path.
+The schema and Knowledge Base are deployed, the Knowledge Base-mode Context MCP endpoint is connected to the Gemini agent, and live retrieval is verified. LensLink uses **Sanity Context MCP**, not regular Sanity MCP, for its answer-generation retrieval path.
 
 ### Milestone 6 — Build the LensLink user experience
 
-**Status: ⏳ PENDING — target checkpoint: ~70% overall**
+**Status: ✅ COMPLETE**
 
 Create the focused user-facing flow:
 
@@ -418,15 +417,13 @@ Create the focused user-facing flow:
 
 ### Milestone 7 — Prove structured content matters
 
-**Status: ⏳ PENDING**
+**Status: ✅ COMPLETE — verified October 2, 2026**
 
-Prepare direct compatibility, adapter, limitations, evidence, and unknown-combination demo questions.
-
-The agent must show that it is using the structured Sanity relationships.
+The live proof in `web/scripts/milestone-7-proof.test.mjs` runs the existing agent against Gemini and Context MCP. All three scenarios passed, and `web/milestone-7-evidence.json` records the actual tool calls, Knowledge Base paths, returned records, and answers. The proof requires `initial_context` and `knowledge_base_read` per scenario; `knowledge_base_search` was invoked in the EF-M scenario and is also verified as an available tool by the existing agent.
 
 ### Milestone 8 — Test and harden
 
-**Status: ⏳ PENDING**
+**Status: ⏳ NEXT**
 
 Test:
 
@@ -547,7 +544,7 @@ The Next.js app uses the normal Next.js development URL.
 
 ## 10. One-Paragraph Prompt for the Next AI Agent
 
-Continue the existing LensLink Sanity Challenge 2026 project from the GitHub repository `egbutaify2-ui/sanity-lenslink-agent`. Do not recreate the project or create a new Sanity project. Use Sanity project `kv3pdv23` and dataset `production`, preserve the root → studio → web structure, and treat **Milestone 2 as complete**: all six Studio forms were verified, the key reference relationships were tested, records were published/reopened successfully, and the Compatibility Rule was edited and republished successfully. The next task is **Milestone 3: remove/isolate the temporary test records and build a small real structured knowledge base** using verified camera, lens, mount, adapter, compatibility-rule, and source records. When VS Code AI access is available, first verify the configured Sanity MCP connection before automating content creation. Use the Progress Tracker in this README to track movement; after Milestone 6, the practical target is approximately 70% complete, with the remaining work focused on proving, hardening, polishing, deploying, and submitting the project. Then source-check the data, connect Sanity Context/MCP, prove the agent can retrieve and traverse the structured relationships, and only then build the final LensLink compatibility UX, test it, deploy it, and prepare the DEV submission. The core requirement is that LensLink answers because it can query and reason over structured Sanity content and evidence, not because a generic LLM guessed the answer.
+Continue the existing LensLink Sanity Challenge 2026 project; do not recreate the project or replace its architecture. Milestones 1–7 are complete, and Milestone 8 (testing and hardening) is next; Milestones 9–12 remain pending. Preserve the Sanity Knowledge Base → Context MCP → existing Gemini agent path and the current UI/API. The live Milestone 7 proof is `npm run test:milestone-7`, with actual answers and MCP evidence in `web/milestone-7-evidence.json`; it requires configured Gemini and Context MCP credentials. The web production build passed. The latest Studio build recheck could not reach `sanity-cdn.com` and therefore did not complete. Do not alter verified compatibility facts or credentials without evidence and authorization. After Milestone 8, complete the UX quality pass, deploy, prepare demo evidence, and submit the DEV post.
 
 ## 11. Handoff Maintenance Rule
 

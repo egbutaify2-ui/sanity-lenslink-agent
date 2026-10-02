@@ -59,8 +59,17 @@ Regular Sanity MCP is useful for development/content management but is **not** t
 - Responsive behavior implemented.
 - UI/backend work pushed to GitHub `main` in commit `8ecb0eb`.
 
+### Milestone 7 — Prove structured reasoning
+**COMPLETE — verified October 2, 2026**
+
+- Added `npm run test:milestone-7`, a live integration proof using the existing Gemini model, LensLink agent, and Sanity Context MCP Knowledge Base.
+- All three scenarios passed: RF direct compatibility, EF compatibility requiring the Canon Mount Adapter EF-EOS R, and EF-M not-compatible/evidence-limited behavior.
+- `web/milestone-7-evidence.json` stores the actual answers, MCP tool calls/results, requested Knowledge Base paths, and returned record text. No model, retrieval, or record mocks are used.
+- The proof run used `initial_context` and `knowledge_base_read` in all scenarios; `knowledge_base_search` was additionally used in the EF-M scenario. The existing agent verifies all three tools are available.
+- Validation: `npm run test:milestone-7` passed (three scenarios); `npm run build:web` passed. The October 2 `npm run build:studio` recheck could not reach `sanity-cdn.com` and timed out before compilation; it had passed at the previous checkpoint. Live tests require configured Gemini and Context MCP credentials and are not offline deterministic tests.
+
 ### Current next milestone
-**Milestone 7 — Prove structured reasoning.**
+**Milestone 8 — Testing and hardening.**
 
 The premium visual/brand polish discussed separately is a later UX-quality pass and must not change the verified agent/MCP architecture.
 
@@ -332,16 +341,14 @@ After each meaningful completed task:
 ## Exact Current Continuation Order
 
 1. Read `README.md` and this file.
-2. Treat Milestones 1–6 as complete.
+2. Treat Milestones 1–7 as complete; do not repeat the live Milestone 7 proof unless validating a change or refreshed evidence.
 3. Do not rebuild the Sanity project, Knowledge Base, Context MCP endpoint, or Gemini agent.
-4. Start **Milestone 7 — Prove structured reasoning**.
-5. Design deliberate tests/demo evidence showing LensLink answers depend on structured Sanity relationships and Knowledge Base content.
-6. After Milestone 7, perform testing/hardening (Milestone 8).
-7. Perform the final UX/brand quality pass (Milestone 9), including the planned premium visual identity work.
-8. Deploy the web app to Render (Milestone 10) with server-side environment variables.
-9. Prepare judge/demo evidence (Milestone 11).
-10. Prepare and submit the DEV Path One post (Milestone 12).
-11. Update this handoff after every meaningful verified checkpoint.
+4. Start **Milestone 8 — Testing and hardening**; broaden coverage to invalid, missing, ambiguous, conflicting, and unsupported cases without changing verified compatibility facts without evidence.
+5. Perform the final UX/brand quality pass (Milestone 9), including the planned premium visual identity work.
+6. Deploy the web app to Render (Milestone 10) with server-side environment variables.
+7. Prepare judge/demo evidence (Milestone 11).
+8. Prepare and submit the DEV Path One post (Milestone 12).
+9. Update this handoff after every meaningful verified checkpoint.
 
 ## Do Not Do These Things
 
@@ -376,10 +383,9 @@ The project's success criterion is a convincing, reproducible demonstration that
 
 **Current state:**
 
-Milestones **1–6 = complete**.
+Milestones **1–7 = complete**. Milestone 8 is next; Milestones 9–12 remain pending.
 
-Current next action:
-**Milestone 7 — prove that structured Sanity relationships materially drive LensLink's answers.**
+Milestone 7 is proven by the live test command `npm run test:milestone-7` and the real call/response evidence in `web/milestone-7-evidence.json`. Direct RF, adapter-required EF, and unsupported/evidence-limited EF-M scenarios all passed against the configured live Knowledge Base.
 
 Completed and pushed:
 - Knowledge Base ✅
@@ -391,6 +397,11 @@ Completed and pushed:
 - Studio build ✅
 - GitHub main push ✅
 
+Completed and verified in the current worktree:
+- Live structured-reasoning proof and recorded Context MCP evidence ✅
+- Web production build ✅
+- Milestone 8 is next; Milestones 9–12 remain pending.
+
 GitHub commit:
 `8ecb0eb`
 
@@ -398,4 +409,4 @@ The premium visual/brand polish is intentionally deferred to the later UX-qualit
 
 ## Last Update
 
-October 1, 2026 — Progress tracker and AI handoff updated to reflect Milestones 1–6 complete and Milestone 7 as the next task.
+October 2, 2026 — Milestone 7 live proof passed for all three scenarios; progress tracker updated with Milestone 8 next.
