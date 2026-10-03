@@ -190,6 +190,14 @@ textarea {
   font-size: 14px;
 }
 
+.coverage-note {
+  max-width: 440px;
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 /* ---------- Examples ---------- */
 
 .examples {
