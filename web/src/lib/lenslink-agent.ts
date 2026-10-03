@@ -1,5 +1,11 @@
 import { createMCPClient } from "@ai-sdk/mcp";
 import { requiresKnowledgeBase } from "./lenslink-routing";
+import {
+  classifyCompatibilityEvidence,
+  evidenceLimitedResponse,
+  isCompatibilityQuestion,
+  knowledgeEntriesFromReadResult,
+} from "./lenslink-evidence";
 import { generateText, stepCountIs, type LanguageModel } from "ai";
 
 const knowledgeBaseId = "kbgd2ZLPDgQG";
@@ -118,14 +124,32 @@ export async function answerLensLinkQuestion(
 
     const readInput = { knowledgeBase: knowledgeBaseId, paths };
     const readResult = await callContextTool("knowledge_base_read", readInput);
+    const retrievedReadText = toolOutputText(readResult);
+    const evidenceEntries = knowledgeEntriesFromReadResult(paths, retrievedReadText);
+    const evidenceState = isCompatibilityQuestion(question)
+      ? classifyCompatibilityEvidence(question, evidenceEntries)
+      : null;
+
+    if (evidenceState?.kind === "unknown") {
+      return {
+        text: evidenceLimitedResponse(evidenceState),
+        toolCalls,
+        toolResults,
+      };
+    }
+
     const retrievedEvidence = [initialContext, searchResult, readResult]
       .map(toolOutputText)
       .filter(Boolean)
       .join("\n\n");
 
+    const evidenceInstruction = evidenceState
+      ? `The retrieved compatibility evidence is classified as ${evidenceState.kind === "documented-incompatible" ? "documented incompatible" : `documented compatible (${evidenceState.compatibility})`}. Treat this as a documented Knowledge Base conclusion only; do not extend it beyond the retrieved pairing and source evidence.`
+      : "";
+
     const result = await generateText({
       model,
-      system: `${systemPrompt}\n\nRequired Context MCP search and Knowledge Base reads have already completed. Base compatibility conclusions on this retrieved evidence; if it does not establish the pairing, say that it is not verified.\n\n${retrievedEvidence}`,
+      system: `${systemPrompt}\n\nRequired Context MCP search and Knowledge Base reads have already completed. Base compatibility conclusions on this retrieved evidence; if it does not establish the pairing, say that it is not verified. ${evidenceInstruction}\n\n${retrievedEvidence}`,
       prompt: question,
       tools,
       stopWhen: stepCountIs(6),

@@ -72,6 +72,15 @@ The important document types are:
 
 This structure lets the agent distinguish a native match from an adapter path or a documented unsupported pairing.
 
+## Evidence-state semantics
+
+LensLink distinguishes three evidence states for compatibility conclusions:
+
+- **Documented compatible** — an explicit compatibility rule is present with supporting source evidence.
+- **Documented incompatible** — an explicit negative compatibility rule is present with supporting source evidence.
+- **Evidence-limited / unknown** — the compatibility rule, supporting source, or explicit pairing evidence is missing or insufficient. In this state LensLink does not ask Gemini to invent a compatibility conclusion.
+
+
 ## Real Canon reasoning cases
 
 The current Knowledge Base contains the Canon examples used in the live proof.
