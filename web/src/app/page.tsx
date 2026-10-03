@@ -433,7 +433,7 @@ export default function Home() {
               <p className="welcome-sub">
                 Camera gear compatibility, grounded in real technical evidence.
               </p>
-              <p className="coverage-note">Current verified coverage is focused on Canon camera and lens compatibility.</p>
+              <p className="coverage-note">Currently verified for Canon camera systems — including EOS R5, RF, EF, and EF-M setups.</p>
             </section>
           )}
 

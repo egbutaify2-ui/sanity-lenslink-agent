@@ -3,9 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node init && next dev",
+    "build": "node init && next build",
+    "start": "node init && next start",
     "test:api": "node --experimental-strip-types --test scripts/lenslink-api.test.mjs",
     "test:milestone-7": "node --env-file-if-exists=.env.local --experimental-strip-types --test scripts/milestone-7-proof.test.mjs",
     "test:evidence-state": "node --experimental-strip-types --test scripts/lenslink-evidence-state.test.mjs"
