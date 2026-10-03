@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 
 const exampleQuestions = [
-  "Will the Canon RF50mm F1.8 STM work with the EOS R5?",
+  "Will the Canon RF 50mm F1.8 STM work with the EOS R5?",
   "Can I use the Canon EF 50mm f/1.8 STM on the EOS R5?",
   "Why isn't the Canon EF-M 22mm supported on the EOS R5?",
 ];
@@ -490,7 +490,7 @@ export default function Home() {
                           <LensLinkMark id={`load-${entry.id}`} size={28} />
                           <div>
                             <span className="ai-name">LensLink</span>
-                            <span className="ai-sub">Checking camera and lens compatibility...</span>
+                            <span className="ai-sub">Checking your setup against LensLink&apos;s knowledge base...</span>
                           </div>
                         </div>
                         <div aria-hidden="true" className="skeleton">
