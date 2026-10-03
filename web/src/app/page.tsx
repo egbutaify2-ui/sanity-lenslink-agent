@@ -433,6 +433,7 @@ export default function Home() {
               <p className="welcome-sub">
                 Camera gear compatibility, grounded in real technical evidence.
               </p>
+              <p className="coverage-note">Current verified coverage is focused on Canon camera and lens compatibility.</p>
             </section>
           )}
 
